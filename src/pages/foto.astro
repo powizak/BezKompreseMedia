@@ -1,9 +1,229 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceHero from '../components/ServiceHero.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { fotoHero, fotoCategories, fotoGalleries, fotoGalleryNote } from '../data/foto';
+
+const categoryGridHeading = "Kategorie služeb";
+const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány na profesionální úrovni a nemusíte se bát jakoukoliv z nich využít. Pokud nenajdete kategorii, kterou hledáte, i tak se neváhejte ozvat.";
 ---
+
 <BaseLayout title="Foto - BezKomprese Media">
-  <section class="section container">
-    <h1>Foto</h1>
-    <p>Obsah stránky se připravuje.</p>
+  <ServiceHero
+    title={fotoHero.title}
+    subtitle={fotoHero.subtitle}
+    intro={fotoHero.intro}
+  />
+
+  <CategoryGrid
+    heading={categoryGridHeading}
+    intro={categoryGridIntro}
+    categories={fotoCategories}
+  />
+
+  <!-- Gallery note -->
+  <section class="section">
+    <div class="container">
+      <p class="gallery-note scroll-reveal" set:html={fotoGalleryNote.replace('ZDE', '<a href="/galerie/">ZDE</a>')} />
+    </div>
   </section>
+
+  <!-- Gallery sections -->
+  <section class="section gallery-sections">
+    <div class="container">
+      {fotoGalleries.map((gallery, i) => (
+        <div class="gallery-section scroll-reveal" data-delay={i * 100}>
+          <div class="gallery-section-header">
+            <h2 class="gallery-section-title">{gallery.title}</h2>
+            <p class="gallery-section-desc">{gallery.description}</p>
+          </div>
+          <div class="gallery-grid">
+            <div class="gallery-placeholder gallery-placeholder--wide">
+              <span>Fotografie</span>
+            </div>
+            <div class="gallery-placeholder">
+              <span>Fotografie</span>
+            </div>
+            <div class="gallery-placeholder">
+              <span>Fotografie</span>
+            </div>
+            <div class="gallery-placeholder">
+              <span>Fotografie</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <PageCTA />
 </BaseLayout>
+
+<style>
+  /* === Gallery Note === */
+  .gallery-note {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .gallery-note :global(a) {
+    color: var(--color-brand-dark);
+    font-weight: var(--weight-bold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--transition-fast);
+  }
+
+  .gallery-note :global(a):hover {
+    color: var(--color-brand);
+  }
+
+  /* === Gallery Sections === */
+  .gallery-sections {
+    padding-top: 0;
+  }
+
+  .gallery-section {
+    margin-bottom: var(--space-16);
+  }
+
+  .gallery-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .gallery-section-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .gallery-section-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-black);
+    margin-bottom: var(--space-3);
+  }
+
+  .gallery-section-desc {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+    max-width: 600px;
+  }
+
+  /* === Gallery Grid: mobile-first === */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .gallery-placeholder {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-light);
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .gallery-placeholder:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .gallery-placeholder::before {
+    content: '';
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--color-brand);
+    border-radius: 50%;
+    opacity: 0.25;
+  }
+
+  .gallery-placeholder::after {
+    content: '';
+    position: absolute;
+    bottom: var(--space-4);
+    left: var(--space-4);
+    width: 32px;
+    height: 2px;
+    background: var(--color-brand);
+    opacity: 0.3;
+  }
+
+  .gallery-placeholder--wide {
+    height: 250px;
+  }
+
+  /* Desktop: asymmetric 12-col grid */
+  @media (min-width: 769px) {
+    .gallery-section-desc {
+      max-width: 700px;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-5);
+    }
+
+    .gallery-placeholder--wide {
+      grid-column: span 6;
+      height: 300px;
+    }
+
+    .gallery-placeholder:not(.gallery-placeholder--wide):nth-child(2) {
+      grid-column: span 3;
+      height: 250px;
+    }
+
+    .gallery-placeholder:not(.gallery-placeholder--wide):nth-child(3) {
+      grid-column: span 3;
+      height: 280px;
+    }
+
+    .gallery-placeholder:nth-child(4) {
+      grid-column: span 4;
+      height: 240px;
+    }
+
+    /* Alternate layout for even-indexed sections */
+    .gallery-section:nth-child(even) .gallery-placeholder--wide {
+      grid-column: 7 / 13;
+    }
+
+    .gallery-section:nth-child(even) .gallery-placeholder:nth-child(2) {
+      grid-column: 1 / 5;
+    }
+
+    .gallery-section:nth-child(even) .gallery-placeholder:nth-child(3) {
+      grid-column: 5 / 7;
+    }
+
+    .gallery-section:nth-child(even) .gallery-placeholder:nth-child(4) {
+      grid-column: 1 / 5;
+      height: 260px;
+    }
+  }
+</style>

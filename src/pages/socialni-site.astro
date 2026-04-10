@@ -1,9 +1,82 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceHero from '../components/ServiceHero.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { socialHero, socialCategories, socialGalleryNote } from '../data/social.ts';
 ---
+
 <BaseLayout title="Sociální sítě - BezKomprese Media">
-  <section class="section container">
-    <h1>Sociální sítě</h1>
-    <p>Obsah stránky se připravuje.</p>
+  <ServiceHero
+    title={socialHero.title}
+    subtitle={socialHero.subtitle}
+    intro={socialHero.intro}
+  />
+
+  <CategoryGrid
+    heading="Kategorie služeb"
+    intro="Veškeré naše jednotlivé služby jsou poskytovány na profesionální úrovni a nemusíte se bát jakoukoliv z nich využít. Pokud nenajdete kategorii, kterou hledáte, i tak se neváhejte ozvat."
+    categories={socialCategories}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="coming-soon scroll-reveal">
+        <div class="coming-soon__icon" aria-hidden="true"></div>
+        <p class="coming-soon__text">{socialGalleryNote}</p>
+      </div>
+    </div>
   </section>
+
+  <PageCTA />
 </BaseLayout>
+
+<style>
+  /* ── Coming Soon Placeholder ─────────────────────── */
+  .coming-soon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-16) var(--space-8);
+    background: var(--color-bg-alt);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    position: relative;
+  }
+
+  .coming-soon__icon {
+    width: 48px;
+    height: 48px;
+    background: var(--color-brand);
+    border-radius: 50%;
+    margin-bottom: var(--space-6);
+    opacity: 0.8;
+  }
+
+  .coming-soon__text {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  /* Desktop styles */
+  @media (min-width: 769px) {
+    .coming-soon {
+      padding: var(--space-20) var(--space-16);
+    }
+
+    .coming-soon__icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: var(--space-8);
+    }
+
+    .coming-soon__text {
+      font-size: var(--text-xl);
+    }
+  }
+</style>

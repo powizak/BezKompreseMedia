@@ -1,16 +1,152 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
+import { contactIntro, contactAddress, contactOpeningHours } from '../data/contact.ts';
+
 const sent = Astro.url.searchParams.get('sent') === '1';
 ---
 <BaseLayout title="Kontakt - BezKomprese Media">
   <section class="section container">
     <h1>Kontakt</h1>
-    {sent && (
-      <div class="success-message" style="background: var(--color-brand-subtle); padding: var(--space-4); border-radius: var(--radius-md); margin-bottom: var(--space-6);">
-        <p><strong>Děkujeme!</strong> Vaše poptávka byla odeslána. Ozveme se Vám co nejdříve.</p>
+    <p class="contact-intro scroll-reveal">{contactIntro}</p>
+
+    {sent ? (
+      <div class="thank-you scroll-reveal">
+        <h2>Děkujeme za Vaši poptávku!</h2>
+        <p>Ozveme se Vám co nejdříve.</p>
+        <a href="/contact/">Zpět na formulář</a>
       </div>
+    ) : (
+      <ContactForm />
     )}
-    <ContactForm />
+
+    <div class="contact-info">
+      <div class="contact-info__block scroll-reveal">
+        <h3>Adresa</h3>
+        <address>
+          <p>{contactAddress.name}</p>
+          <p>{contactAddress.street}</p>
+          <p>{contactAddress.city}</p>
+          <p><a href={`tel:${contactAddress.phone.replace(/\s/g, '')}`}>{contactAddress.phoneLabel}</a></p>
+          <p><a href={`mailto:${contactAddress.email}`}>{contactAddress.email}</a></p>
+        </address>
+      </div>
+      <div class="contact-info__block scroll-reveal">
+        <h3>Otevírací doba</h3>
+        <ul>
+          {contactOpeningHours.map((item) => (
+            <li><span>{item.day}</span><span>{item.time}</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
   </section>
 </BaseLayout>
+
+<style>
+  .contact-intro {
+    color: var(--color-text);
+    font-size: var(--text-lg);
+    max-width: 720px;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-12);
+  }
+
+  .thank-you {
+    text-align: center;
+    padding: var(--space-12) var(--space-8);
+    background-color: var(--color-brand-subtle);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-12);
+    border: 2px solid var(--color-brand);
+  }
+
+  .thank-you h2 {
+    color: var(--color-brand-dark);
+    margin-bottom: var(--space-4);
+  }
+
+  .thank-you p {
+    color: var(--color-text);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-lg);
+  }
+
+  .thank-you a {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    background-color: var(--color-brand);
+    color: var(--color-black);
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-fast);
+  }
+
+  .thank-you a:hover {
+    background-color: var(--color-brand-dark);
+  }
+
+  .contact-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    margin-top: var(--space-16);
+  }
+
+  .contact-info__block {
+    padding: var(--space-6);
+    background-color: var(--color-bg-alt);
+    border-radius: var(--radius-lg);
+  }
+
+  .contact-info__block h3 {
+    margin-bottom: var(--space-6);
+    color: var(--color-black);
+  }
+
+  .contact-info__block address {
+    font-style: normal;
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .contact-info__block address p {
+    color: var(--color-text);
+  }
+
+  .contact-info__block address a {
+    color: var(--color-text);
+    transition: color var(--transition-fast);
+  }
+
+  .contact-info__block address a:hover {
+    color: var(--color-brand);
+  }
+
+  .contact-info__block ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .contact-info__block li {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-text);
+    font-size: var(--text-base);
+  }
+
+  .contact-info__block li span:first-child {
+    font-weight: var(--weight-bold);
+    color: var(--color-black);
+  }
+
+  @media (min-width: 768px) {
+    .contact-info {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,9 +1,135 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceHero from '../components/ServiceHero.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { galerieHero, galerieItems, galerieNote } from '../data/galerie';
 ---
 <BaseLayout title="Galerie - BezKomprese Media">
-  <section class="section container">
-    <h1>Galerie</h1>
-    <p>Obsah stránky se připravuje.</p>
+  <ServiceHero
+    title={galerieHero.title}
+    subtitle={galerieHero.subtitle}
+    intro={galerieHero.intro}
+  />
+
+  <section class="section">
+    <div class="container">
+      {galerieItems.map((item) => (
+        <div class="gallery-item scroll-reveal">
+          <h2 class="gallery-item__title">{item.title}</h2>
+          <p class="gallery-item__desc">{item.description}</p>
+          <div class="gallery-item__grid">
+            <div class="gallery-placeholder" data-span="2">
+              <span class="gallery-placeholder__label">Fotografie</span>
+            </div>
+            <div class="gallery-placeholder">
+              <span class="gallery-placeholder__label">Fotografie</span>
+            </div>
+            <div class="gallery-placeholder">
+              <span class="gallery-placeholder__label">Fotografie</span>
+            </div>
+            <div class="gallery-placeholder" data-span="2">
+              <span class="gallery-placeholder__label">Fotografie</span>
+            </div>
+            <div class="gallery-placeholder">
+              <span class="gallery-placeholder__label">Fotografie</span>
+            </div>
+          </div>
+        </div>
+      ))}
+      <p class="gallery-note scroll-reveal">{galerieNote}</p>
+    </div>
   </section>
+
+  <PageCTA />
 </BaseLayout>
+
+<style>
+  /* ── Gallery Item ───────────────────────────────── */
+  .gallery-item {
+    width: 100%;
+    margin-bottom: var(--space-20);
+  }
+
+  .gallery-item__title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-black);
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-tight);
+  }
+
+  .gallery-item__desc {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    color: var(--color-text);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-8);
+  }
+
+  /* ── Gallery Grid ────────────────────────────────── */
+  .gallery-item__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  /* ── Gallery Placeholder ──────────────────────────── */
+  .gallery-placeholder {
+    position: relative;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .gallery-placeholder:hover {
+    border-color: var(--color-brand);
+    box-shadow: var(--shadow-md);
+  }
+
+  .gallery-placeholder__label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-light);
+    opacity: 0.6;
+  }
+
+  /* Desktop: asymmetric 12-col grid with span variations */
+  @media (min-width: 769px) {
+    .gallery-item__grid {
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-6);
+    }
+
+    .gallery-placeholder {
+      min-height: 300px;
+    }
+
+    /* Default single column span */
+    .gallery-placeholder {
+      grid-column: span 4;
+    }
+
+    /* Two column span via data attribute */
+    .gallery-placeholder[data-span="2"] {
+      grid-column: span 6;
+    }
+
+    /* Asymmetric layout - some placeholders taller */
+    .gallery-placeholder:nth-child(1) {
+      min-height: 340px;
+    }
+
+    .gallery-placeholder:nth-child(4) {
+      min-height: 340px;
+    }
+  }
+</style>
