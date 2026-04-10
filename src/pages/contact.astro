@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+const sent = Astro.url.searchParams.get('sent') === '1';
+---
+<BaseLayout title="Kontakt - BezKomprese Media">
+  <section class="section container">
+    <h1>Kontakt</h1>
+    {sent && (
+      <div class="success-message" style="background: var(--color-brand-subtle); padding: var(--space-4); border-radius: var(--radius-md); margin-bottom: var(--space-6);">
+        <p><strong>Děkujeme!</strong> Vaše poptávka byla odeslána. Ozveme se Vám co nejdříve.</p>
+      </div>
+    )}
+    <ContactForm />
+  </section>
+</BaseLayout>
