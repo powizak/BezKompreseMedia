@@ -22,15 +22,15 @@
 
 <style>
   .references {
-    padding: var(--spacing-section) var(--spacing-container);
+    padding: var(--space-20) var(--container-padding);
     text-align: center;
   }
 
   .references h2 {
-    font-size: var(--font-size-heading);
+    font-size: var(--text-3xl);
     color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
-    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-8);
+    font-weight: var(--weight-bold);
   }
 
   .references-grid {
@@ -38,12 +38,12 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: var(--spacing-lg);
+    gap: var(--space-6);
   }
 
   .reference-link {
     display: block;
-    transition: transform var(--transition-duration) ease;
+    transition: transform var(--transition-base) ease;
   }
 
   .reference-link:hover {
@@ -51,11 +51,11 @@
   }
 
   .reference-logo {
-    max-height: 60px;
+    max-height: 50px;
     width: auto;
     filter: grayscale(100%);
     opacity: 0.7;
-    transition: filter var(--transition-duration) ease, opacity var(--transition-duration) ease;
+    transition: filter var(--transition-base) ease, opacity var(--transition-base) ease;
   }
 
   .reference-link:hover .reference-logo {
@@ -80,13 +80,13 @@
     margin-top: 1px;
   }
 
-  @media (max-width: 640px) {
+  @media (min-width: 641px) {
     .references-grid {
-      gap: var(--spacing-md);
+      gap: var(--space-8);
     }
 
     .reference-logo {
-      max-height: 50px;
+      max-height: 60px;
     }
   }
 </style>
