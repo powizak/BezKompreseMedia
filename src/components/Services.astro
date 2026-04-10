@@ -1,0 +1,236 @@
+---
+import { Image } from 'astro:assets';
+import linkedCamera from '../assets/icons/linked-camera.webp';
+import shutter from '../assets/icons/shutter.webp';
+import wwwIcon from '../assets/icons/www.webp';
+import socialNetwork from '../assets/icons/social-network.webp';
+
+const services = [
+  {
+    title: 'Foto',
+    href: '/foto/',
+    icon: linkedCamera,
+    alt: 'Ikona fotoaparátu',
+    description: 'Naše fotografické služby nejsou pouze o pořizování snímků. Jsou o zachycení podstaty chvilek a přetvoření jich na nezapomenutelné vzpomínky.',
+  },
+  {
+    title: 'Video',
+    href: '/video/',
+    icon: shutter,
+    alt: 'Ikona čočky fotoaparátu',
+    description: 'V Bezkomprese media nejde ve videu pouze o pohybující se obrázky. Jde o vytváření poutavých videí, která oslovují vaši cílovou skupinu a přivádějí Vaše příběhy k životu.',
+  },
+  {
+    title: 'Web',
+    href: '/web/',
+    icon: wwwIcon,
+    alt: 'Ikona webu',
+    description: 'Naše webové prezentace jsou více než jen esteticky příjemné stránky. Jsou to digitální prostředky, které reflektují jedinečnost Vaší firmy.',
+  },
+  {
+    title: 'Sociální sítě',
+    href: '/socialni-site/',
+    icon: socialNetwork,
+    alt: 'Ikona sociálních sítí',
+    description: 'Sestavujeme strategie, které nejen rozvíjejí Vaši přítomnost, ale také budují hluboké spojení s Vaším publikem prostřednictvím cílené interakce a obsahu, který oslovuje a angažuje.',
+  },
+];
+---
+
+<section class="services section" id="sluzby">
+  <div class="container">
+    <header class="services-header scroll-reveal">
+      <h2 class="services-heading">Co nabízíme</h2>
+      <p class="services-intro">
+        Veškeré naše jednotlivé služby jsou poskytovány na profesionální úrovni a nemusíte se bát jakoukoliv z nich využít. Pokud nenajdete kategorii, kterou hledáte, i tak se <a href="/contact/" class="services-link">neváhejte ozvat</a>.
+      </p>
+    </header>
+
+    <div class="services-grid">
+      {services.map((service, i) => (
+        <article
+          class={`services-card scroll-reveal services-card--${i + 1}`}
+          data-delay={i * 100}
+        >
+          <div class="services-card__icon">
+            <Image src={service.icon} alt={service.alt} width={40} height={40} />
+          </div>
+          <h3 class="services-card__title">{service.title}</h3>
+          <p class="services-card__desc">{service.description}</p>
+          <a href={service.href} class="services-card__cta">
+            Zjistit více
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* === Header === */
+  .services-header {
+    text-align: center;
+    margin-bottom: var(--space-16);
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .services-heading {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .services-intro {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+  }
+
+  .services-link {
+    color: var(--color-brand);
+    font-weight: var(--weight-bold);
+    transition: color var(--transition-fast);
+  }
+
+  .services-link:hover {
+    color: var(--color-brand-dark);
+  }
+
+  /* === Grid: asymmetric avantgarde === */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  /* Card 1 — spans 7 cols, slight extra height feel */
+  .services-card--1 {
+    grid-column: 1 / 8;
+    grid-row: 1 / 2;
+    padding-top: var(--space-3);
+  }
+
+  /* Card 2 — spans 5 cols, offset down */
+  .services-card--2 {
+    grid-column: 8 / 13;
+    grid-row: 1 / 2;
+    margin-top: var(--space-10);
+  }
+
+  /* Card 3 — spans 5 cols, second row */
+  .services-card--3 {
+    grid-column: 1 / 6;
+    grid-row: 2 / 3;
+    margin-top: calc(-1 * var(--space-4));
+  }
+
+  /* Card 4 — spans 7 cols, offset right and down */
+  .services-card--4 {
+    grid-column: 6 / 13;
+    grid-row: 2 / 3;
+    margin-top: var(--space-4);
+  }
+
+  /* === Card === */
+  .services-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-brand);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8) var(--space-8) var(--space-6);
+    position: relative;
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .services-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Icon circle */
+  .services-card__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    background: var(--color-brand-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-6);
+    flex-shrink: 0;
+    transition: background var(--transition-fast);
+  }
+
+  .services-card:hover .services-card__icon {
+    background: var(--color-brand-light);
+  }
+
+  .services-card__icon :global(img) {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+
+  /* Title */
+  .services-card__title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-3);
+  }
+
+  /* Description */
+  .services-card__desc {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+    margin-bottom: var(--space-6);
+  }
+
+  /* CTA link */
+  .services-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+    transition: color var(--transition-fast), gap var(--transition-fast);
+  }
+
+  .services-card__cta:hover {
+    color: var(--color-brand);
+    gap: var(--space-3);
+  }
+
+  .services-card__cta svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .services-card__cta:hover svg {
+    transform: translateX(2px);
+  }
+
+  /* === Responsive === */
+  @media (max-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+
+    .services-card--1,
+    .services-card--2,
+    .services-card--3,
+    .services-card--4 {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      margin-top: 0;
+      padding-top: var(--space-8);
+    }
+  }
+</style>

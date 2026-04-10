@@ -1,0 +1,163 @@
+---
+---
+
+<section class="quick-contact scroll-reveal">
+  <div class="container">
+    <div class="quick-contact__grid">
+      <!-- Block 1: Domluvte si schůzku -->
+      <div class="quick-contact__block quick-contact__block--primary" data-delay="0">
+        <h2 class="quick-contact__heading">Domluvte si schůzku</h2>
+        <p class="quick-contact__text">Cokoliv potřebujete, zavolejte, napište, vše vymyslíme</p>
+        <a href="/contact/#form" class="quick-contact__link">
+          Kontaktujte nás
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Block 2: Otevírací doba provozovny -->
+      <div class="quick-contact__block quick-contact__block--secondary" data-delay="100">
+        <h2 class="quick-contact__heading">Otevírací doba provozovny</h2>
+        <p class="quick-contact__text">Po domluvě kdykoliv</p>
+      </div>
+
+      <!-- Block 3: Rychlý kontakt -->
+      <div class="quick-contact__block quick-contact__block--tertiary" data-delay="100">
+        <h2 class="quick-contact__heading">Rychlý kontakt</h2>
+        <a href="tel:+420731466375" class="quick-contact__phone">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          +420 731 466 375
+        </a>
+        <a href="tel:+420731466375" class="quick-contact__link">
+          Zavolejte nám
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quick-contact {
+    background-color: var(--color-bg-alt);
+    padding-block: var(--space-16);
+  }
+
+  .quick-contact__grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 768px) {
+    .quick-contact__grid {
+      grid-template-columns: 1.5fr 1fr 1fr;
+    }
+  }
+
+  .quick-contact__block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity var(--transition-base), transform var(--transition-base);
+  }
+
+  .quick-contact__block.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quick-contact__block {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  .quick-contact__heading {
+    font-size: var(--text-lg);
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    color: var(--color-brand-dark);
+    margin: 0;
+  }
+
+  .quick-contact__text {
+    font-size: var(--text-base);
+    color: var(--color-text);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  .quick-contact__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--color-brand);
+    transition: color var(--transition-fast);
+  }
+
+  .quick-contact__phone:hover {
+    color: var(--color-brand-dark);
+  }
+
+  .quick-contact__phone svg {
+    flex-shrink: 0;
+  }
+
+  .quick-contact__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    color: var(--color-brand);
+    transition: color var(--transition-fast);
+    margin-top: auto;
+  }
+
+  .quick-contact__link:hover {
+    color: var(--color-brand-dark);
+  }
+
+  .quick-contact__link svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .quick-contact__link:hover svg {
+    transform: translateX(4px);
+  }
+</style>
+
+<script>
+  // Staggered reveal animation for blocks
+  const blocks = document.querySelectorAll('.quick-contact__block');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const delay = parseInt(entry.target.dataset.delay || '0');
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  blocks.forEach((block) => observer.observe(block));
+</script>

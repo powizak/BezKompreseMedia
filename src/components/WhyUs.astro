@@ -1,0 +1,99 @@
+---
+---
+
+<section class="why-us section scroll-reveal" style="background-color: var(--color-brand-subtle);">
+  <div class="container">
+    <p class="why-us__intro">
+      S Bezkomprese media získáte nejen kvalitní digitální obsah, ale i tým vášnivých profesionálů, kteří spojují inovace s kreativitou. Naše oddanost každému projektu zajišťuje, že každý snímek, každé video a každá webová prezentace vystihuje jedinečnost Vaší značky a přináší skutečnou hodnotu Vašim digitálním aktivitám.
+    </p>
+
+    <div class="why-us__grid">
+      <div class="why-us__item">
+        <div class="why-us__accent"></div>
+        <h3 class="why-us__heading">Profesionální přístup</h3>
+        <p class="why-us__text">Ke každému zákazníkovi přistupujeme na profesionální úrovni.</p>
+      </div>
+
+      <div class="why-us__item">
+        <div class="why-us__accent"></div>
+        <h3 class="why-us__heading">Dlouholeté zkušenosti</h3>
+        <p class="why-us__text">Každý z našeho teamu má dlouholeté zkušenosti ve svém oboru.</p>
+      </div>
+
+      <div class="why-us__item">
+        <div class="why-us__accent"></div>
+        <h3 class="why-us__heading">Časová flexibilita</h3>
+        <p class="why-us__text">Vždy se přizpůsobíme Vašim časovým možnostem - vše je na individuální dohodě.</p>
+      </div>
+
+      <div class="why-us__item">
+        <div class="why-us__accent"></div>
+        <h3 class="why-us__heading">Ověřená práce</h3>
+        <p class="why-us__text">Na naši práci se můžete podívat v referencích, které mluví za vše.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-us__intro {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text);
+    max-width: 900px;
+    margin-inline: auto;
+    margin-block-end: var(--space-16);
+    text-align: center;
+    font-style: italic;
+  }
+
+  .why-us__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .why-us__item {
+    background-color: var(--color-white);
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .why-us__item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .why-us__accent {
+    width: 40px;
+    height: 4px;
+    background-color: var(--color-brand);
+    border-radius: var(--radius-full);
+    margin-block-end: var(--space-4);
+  }
+
+  .why-us__heading {
+    font-size: var(--text-xl);
+    color: var(--color-black);
+    margin-block-end: var(--space-3);
+  }
+
+  .why-us__text {
+    font-size: var(--text-base);
+    color: var(--color-text);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (min-width: 768px) {
+    .why-us__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-10);
+    }
+
+    .why-us__item:nth-child(2) {
+      margin-block-start: var(--space-8);
+    }
+  }
+</style>

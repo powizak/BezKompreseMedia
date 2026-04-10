@@ -1,0 +1,108 @@
+---
+// CTASection.astro - Call-to-action section before footer
+---
+
+<section class="cta-section scroll-reveal">
+  <div class="cta-container">
+    <div class="cta-content">
+      <h2 class="cta-heading">Neváhejte nás kontaktovat</h2>
+      <a href="tel:+420731466375" class="cta-phone">+420 731 466 375 (Robin)</a>
+    </div>
+    <a href="/contact/#form" class="cta-button">Zaslat poptávku</a>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    width: 100%;
+    background: var(--color-brand);
+    padding: 4rem 2rem;
+  }
+
+  .cta-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .cta-content {
+    flex: 1;
+  }
+
+  .cta-heading {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-text-dark, #1a1a1a);
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
+
+  .cta-phone {
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    color: var(--color-text-dark, #1a1a1a);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .cta-phone:hover {
+    opacity: 0.8;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    background: var(--color-text-dark, #1a1a1a);
+    color: var(--color-brand);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .cta-button:active {
+    transform: translateY(0);
+  }
+
+  /* Mobile - stack vertically */
+  @media (max-width: 768px) {
+    .cta-container {
+      flex-direction: column;
+      text-align: center;
+      gap: 2rem;
+    }
+
+    .cta-heading {
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+
+  /* Scroll reveal animation (handled by global JS) */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>

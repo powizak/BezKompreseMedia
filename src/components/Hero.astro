@@ -1,0 +1,237 @@
+---
+// Hero.astro — Asymmetric avantgarde hero section for BezKomprese Media homepage
+import { Image } from 'astro:assets';
+import heroSrc from '../assets/hero.webp';
+---
+
+<section class="hero scroll-reveal" aria-label="Úvodní sekce">
+  <div class="hero__container">
+    <div class="hero__content">
+      <p class="hero__tagline">BezKomprese Media</p>
+      <h1 class="hero__heading">
+        Digitální kreativita<br />Bez Kompromisů
+      </h1>
+      <p class="hero__subtitle">
+        Naše vášeň spočívá ve vytváření vizuálních, digitálních a kreativních prvků, které posouvají Vaše podnikání kupředu.
+      </p>
+      <a href="/contact/#form" class="hero__cta">Zaslat poptávku</a>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__image-wrap">
+        <Image
+          src={heroSrc}
+          alt="BezKomprese Media — kreativní digitální tvorba"
+          width={860}
+          class="hero__image"
+        />
+      </div>
+      <div class="hero__shape hero__shape--circle" aria-hidden="true"></div>
+      <div class="hero__shape hero__shape--line" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section ──────────────────────────────────── */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(
+      160deg,
+      var(--color-white) 0%,
+      var(--color-bg-alt) 100%
+    );
+    overflow: hidden;
+    padding-block: var(--space-12);
+  }
+
+  .hero__container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--container-padding);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  /* ── Text content ─────────────────────────────── */
+  .hero__content {
+    position: relative;
+    z-index: var(--z-base);
+  }
+
+  .hero__tagline {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+    margin-bottom: var(--space-4);
+  }
+
+  .hero__heading {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    color: var(--color-black);
+    margin-bottom: var(--space-6);
+    position: relative;
+  }
+
+  /* Brand accent line under heading */
+  .hero__heading::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--color-brand);
+    margin-top: var(--space-5);
+    border-radius: var(--radius-sm);
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text);
+    max-width: 520px;
+    margin-bottom: var(--space-8);
+  }
+
+  /* ── CTA Button ───────────────────────────────── */
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4) var(--space-10);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: var(--weight-bold);
+    color: var(--color-black);
+    background: var(--color-brand);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition:
+      background var(--transition-base),
+      transform var(--transition-fast),
+      box-shadow var(--transition-base);
+  }
+
+  .hero__cta:hover {
+    background: var(--color-brand-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero__cta:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ── Visual / Image area ──────────────────────── */
+  .hero__visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero__image-wrap {
+    position: relative;
+    max-width: 860px;
+    width: 100%;
+  }
+
+  .hero__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    object-fit: cover;
+  }
+
+  /* ── Decorative geometric shapes ──────────────── */
+  .hero__shape {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .hero__shape--circle {
+    width: 120px;
+    height: 120px;
+    border: 3px solid var(--color-brand);
+    border-radius: 50%;
+    opacity: 0.2;
+    top: -30px;
+    right: -20px;
+  }
+
+  .hero__shape--line {
+    width: 60px;
+    height: 3px;
+    background: var(--color-brand);
+    opacity: 0.35;
+    bottom: -20px;
+    left: 10px;
+    transform: rotate(-12deg);
+  }
+
+  /* ══════════════════════════════════════════════════
+     Desktop — asymmetric grid with overlapping image
+     ══════════════════════════════════════════════════ */
+  @media (min-width: 769px) {
+    .hero {
+      clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+      padding-block: var(--space-16);
+      padding-bottom: var(--space-32);
+    }
+
+    .hero__container {
+      grid-template-columns: 55fr 50fr;
+      gap: 0;
+    }
+
+    .hero__content {
+      padding-right: var(--space-12);
+    }
+
+    .hero__visual {
+      grid-column: 2;
+      grid-row: 1;
+      /* Negative offset: image overlaps into text area */
+      margin-left: calc(var(--space-8) * -1);
+      margin-top: var(--space-10);
+      margin-bottom: calc(var(--space-8) * -1);
+    }
+
+    .hero__image-wrap {
+      transform: rotate(-1.5deg);
+      transition: transform var(--transition-slow);
+    }
+
+    .hero__image-wrap:hover {
+      transform: rotate(0deg);
+    }
+
+    .hero__shape--circle {
+      width: 180px;
+      height: 180px;
+      top: -40px;
+      right: -30px;
+    }
+
+    .hero__shape--line {
+      width: 90px;
+      bottom: -30px;
+      left: 20px;
+    }
+  }
+</style>
