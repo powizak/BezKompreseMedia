@@ -15,5 +15,9 @@
     "@astrojs/sitemap": "^3.7.2",
     "@rollup/rollup-win32-x64-msvc": "^4.60.1",
     "astro": "^6.1.5"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.60.1",
+    "@rollup/rollup-win32-x64-msvc": "^4.60.1"
   }
 }

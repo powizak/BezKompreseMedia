@@ -1,0 +1,162 @@
+---
+// PageCTA.astro - Shared CTA block for sub-pages
+// Props: showPriceLink (boolean, default: true), phoneText (string, default: "+420 731 466 375 (Robin)")
+
+interface Props {
+  showPriceLink?: boolean;
+  phoneText?: string;
+}
+
+const {
+  showPriceLink = true,
+  phoneText = "+420 731 466 375 (Robin)"
+} = Astro.props;
+---
+
+<section class="page-cta">
+  <div class="page-cta-container">
+    <!-- Price inquiry block -->
+    <div class="page-cta-block page-cta-price">
+      <h2 class="page-cta-heading">Zajímá Vás cena našich služeb?</h2>
+      {showPriceLink && (
+        <a href="/#sluzby" class="page-cta-link">Prohlédněte si ceník</a>
+      )}
+    </div>
+
+    <!-- Contact block -->
+    <div class="page-cta-block page-cta-contact">
+      <p class="page-cta-text">A nebo nás neváhejte rovnou kontaktovat 😉</p>
+      <a href="tel:+420731466375" class="page-cta-phone">{phoneText}</a>
+      <a href="/contact/#form" class="page-cta-button">Zaslat poptávku</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-cta {
+    width: 100%;
+    background: var(--color-brand);
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .page-cta-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .page-cta-block {
+    width: 100%;
+  }
+
+  .page-cta-price {
+    text-align: center;
+  }
+
+  .page-cta-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+  }
+
+  .page-cta-heading {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-bg-dark);
+    margin: 0 0 var(--space-2) 0;
+    line-height: var(--leading-tight);
+  }
+
+  .page-cta-text {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-regular);
+    color: var(--color-bg-dark);
+    margin: 0;
+  }
+
+  .page-cta-link {
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    color: var(--color-bg-dark);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: opacity var(--transition-fast);
+  }
+
+  .page-cta-link:hover {
+    opacity: 0.8;
+  }
+
+  .page-cta-phone {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-bg-dark);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+
+  .page-cta-phone:hover {
+    opacity: 0.8;
+  }
+
+  .page-cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4) var(--space-10);
+    font-size: var(--text-base);
+    font-weight: var(--weight-bold);
+    background: var(--color-bg-dark);
+    color: var(--color-brand);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: transform var(--transition-fast), box-shadow var(--transition-base);
+    white-space: nowrap;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .page-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .page-cta-button:active {
+    transform: translateY(0);
+  }
+
+  /* Desktop - side-by-side layout */
+  @media (min-width: 769px) {
+    .page-cta-container {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space-16);
+    }
+
+    .page-cta-block {
+      flex: 1;
+    }
+
+    .page-cta-price {
+      text-align: left;
+    }
+
+    .page-cta-contact {
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .page-cta-heading {
+      margin-bottom: var(--space-3);
+    }
+
+    .page-cta-button {
+      width: auto;
+      max-width: none;
+    }
+  }
+</style>

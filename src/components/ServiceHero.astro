@@ -1,0 +1,222 @@
+---
+// ServiceHero.astro — Text-only hero for service sub-pages
+// Asymmetric avantgarde design on dark background
+
+interface Props {
+  title: string;
+  subtitle: string;
+  intro: string;
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const {
+  title,
+  subtitle,
+  intro,
+  ctaText = 'Zaslat poptávku',
+  ctaHref = '/contact/#form',
+} = Astro.props;
+---
+
+<section class="service-hero scroll-reveal" aria-label={title}>
+  <div class="service-hero__container">
+    <div class="service-hero__content">
+      <p class="service-hero__tagline">{subtitle}</p>
+      <h1 class="service-hero__heading">{title}</h1>
+      <p class="service-hero__intro">{intro}</p>
+      <a href={ctaHref} class="service-hero__cta">{ctaText}</a>
+    </div>
+
+    <div class="service-hero__decoration" aria-hidden="true">
+      <span class="service-hero__shape service-hero__shape--ring"></span>
+      <span class="service-hero__shape service-hero__shape--bar"></span>
+      <span class="service-hero__shape service-hero__shape--dot"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section ──────────────────────────────────── */
+  .service-hero {
+    position: relative;
+    width: 100%;
+    background: var(--color-bg-dark);
+    overflow: hidden;
+    padding-block: var(--space-16);
+  }
+
+  .service-hero__container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--container-padding);
+    position: relative;
+  }
+
+  /* ── Text content ─────────────────────────────── */
+  .service-hero__content {
+    position: relative;
+    z-index: var(--z-base);
+    max-width: 600px;
+  }
+
+  .service-hero__tagline {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+    margin-bottom: var(--space-4);
+  }
+
+  .service-hero__heading {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    color: var(--color-white);
+    margin-bottom: var(--space-6);
+    position: relative;
+  }
+
+  /* Brand accent bar beneath heading */
+  .service-hero__heading::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 4px;
+    background: var(--color-brand);
+    margin-top: var(--space-5);
+    border-radius: var(--radius-sm);
+  }
+
+  .service-hero__intro {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+    margin-bottom: var(--space-8);
+  }
+
+  /* ── CTA Button ───────────────────────────────── */
+  .service-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4) var(--space-10);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: var(--weight-bold);
+    color: var(--color-black);
+    background: var(--color-brand);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition:
+      background var(--transition-base),
+      transform var(--transition-fast),
+      box-shadow var(--transition-base);
+  }
+
+  .service-hero__cta:hover {
+    background: var(--color-brand-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .service-hero__cta:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ── Decorative geometric shapes ──────────────── */
+  .service-hero__decoration {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .service-hero__shape {
+    position: absolute;
+  }
+
+  .service-hero__shape--ring {
+    width: 90px;
+    height: 90px;
+    border: 3px solid var(--color-brand);
+    border-radius: 50%;
+    opacity: 0.15;
+    bottom: var(--space-8);
+    right: var(--space-4);
+  }
+
+  .service-hero__shape--bar {
+    width: 48px;
+    height: 3px;
+    background: var(--color-brand);
+    opacity: 0.25;
+    bottom: calc(var(--space-8) + 110px);
+    right: var(--space-10);
+    transform: rotate(-15deg);
+  }
+
+  .service-hero__shape--dot {
+    width: 12px;
+    height: 12px;
+    background: var(--color-brand);
+    border-radius: 50%;
+    opacity: 0.3;
+    top: var(--space-6);
+    right: calc(var(--space-4) + 60px);
+  }
+
+  /* ══════════════════════════════════════════════════
+     Desktop — asymmetric offset with large decorations
+     ══════════════════════════════════════════════════ */
+  @media (min-width: 769px) {
+    .service-hero {
+      clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+      padding-block: var(--space-24);
+      padding-bottom: var(--space-32);
+    }
+
+    .service-hero__content {
+      max-width: 680px;
+    }
+
+    .service-hero__heading {
+      font-size: var(--text-4xl);
+    }
+
+    .service-hero__intro {
+      font-size: var(--text-lg);
+    }
+
+    /* Enlarge decorative shapes on desktop */
+    .service-hero__shape--ring {
+      width: 200px;
+      height: 200px;
+      bottom: var(--space-10);
+      right: var(--space-16);
+      opacity: 0.12;
+    }
+
+    .service-hero__shape--bar {
+      width: 100px;
+      height: 4px;
+      bottom: calc(var(--space-10) + 230px);
+      right: calc(var(--space-16) + 50px);
+      transform: rotate(-12deg);
+    }
+
+    .service-hero__shape--dot {
+      width: 18px;
+      height: 18px;
+      top: var(--space-12);
+      right: calc(var(--space-16) + 120px);
+      opacity: 0.25;
+    }
+  }
+</style>
