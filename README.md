@@ -174,6 +174,25 @@ Poznámka: WEDOS běžně nepodporuje SSH/rsync, proto je FTP primární metoda 
 - [ ] Rychlost načítání je dobrá ([PageSpeed Insights](https://pagespeed.web.dev/))
 - [ ] Sitemap je dostupná na `/sitemap-index.xml`
 
+## Řešení problémů (Troubleshooting)
+
+### Chyba Rollupu na Windows (Missing optional dependency)
+
+Pokud se při spuštění `npm run dev` nebo `npm run build` na Windows objeví chyba:
+`Error: Cannot find module @rollup/rollup-win32-x64-msvc. npm has a bug related to optional dependencies...`
+
+**Příčina:**
+Některé verze `npm` na Windows špatně zpracovávají volitelné závislosti (`optionalDependencies`), zejména pokud byl `package-lock.json` generován na Linuxu.
+
+**Řešení:**
+V projektu jsme toto ošetřili vynucením instalace Windows binárek přes `dependencies` v `package.json`. Pokud by se chyba opakovala:
+1. Smažte `node_modules` a `package-lock.json`.
+2. Spusťte `npm install`.
+3. Pokud chyba přetrvává, nainstalujte konkrétní balíčky ručně:
+   ```bash
+   npm install @rollup/rollup-win32-x64-msvc @img/sharp-win32-x64
+   ```
+
 ## Údržba
 
 ### Přidání nové stránky
