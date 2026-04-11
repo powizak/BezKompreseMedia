@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
@@ -7,6 +7,7 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [sitemap()],
   image: {
+    service: passthroughImageService(),
     remotePatterns: [
       {
         protocol: 'https',
