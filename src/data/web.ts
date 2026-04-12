@@ -14,6 +14,7 @@ export interface PortfolioItem {
   tags: string[];
   url: string;
   urlText: string;
+  image: string;
 }
 
 export const webHero = {
@@ -46,11 +47,13 @@ export const webPortfolio: PortfolioItem[] = [
     tags: ["Vícejazyčná verze webu", "SEO optimalizace", "Responzivní web", "Copywriting", "Implementace bookovacího systému", "Webhosting"],
     url: "www.apartmentszeleznaruda.cz",
     urlText: "www.apartmentszeleznaruda.cz",
+    image: "/images/webReferences/ApartmentsPrezentaceLoop.webp",
   },
   {
     title: "BezKomprese Servis",
     tags: ["Vyvinuto pomocí AI", "SEO optimalizace", "Responzivní web", "Copywriting", "Webhosting", "Extrémně rychlý web"],
     url: "www.bezkompreseservis.cz",
     urlText: "www.bezkompreseservis.cz",
+    image: "/images/webReferences/bkservisweb.webp",
   },
 ];
