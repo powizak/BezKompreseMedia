@@ -16,6 +16,7 @@
     "@img/sharp-win32-x64": "^0.34.5",
     "@rollup/rollup-win32-x64-msvc": "^4.60.1",
     "astro": "^6.1.5",
+    "glightbox": "^3.3.0",
     "sharp": "^0.34.5"
   },
   "optionalDependencies": {
