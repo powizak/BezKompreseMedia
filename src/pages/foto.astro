@@ -41,14 +41,14 @@ const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány
           {gallery.photos.length > 0 ? (
             <div class="gallery-grid">
               {gallery.photos.map((photo) => (
-                <div class="gallery-photo">
+                <a href={photo.src} class="glightbox gallery-photo" data-gallery={gallery.title}>
                   <img
                     src={photo.src}
                     alt={photo.alt}
                     loading="lazy"
                     decoding="async"
                   />
-                </div>
+                </a>
               ))}
             </div>
           ) : null}
@@ -127,9 +127,12 @@ const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány
   }
 
   .gallery-photo {
+    display: block;
     border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--color-bg-alt);
+    text-decoration: none;
+    color: inherit;
   }
 
   .gallery-photo img {
