@@ -26,9 +26,9 @@ export const teamMembers: TeamMember[] = [
     bio: "Všechny nás spojuje láska k autům a jelikož máme všichni bohaté zkušenosti ve svých oborech, spojit se v jeden silný celek byla jasná volba!",
     photo: "/images/global/BKTeamVilik.jpg",
     socials: [
-      { platform: "Facebook", url: "" },
-      { platform: "Youtube", url: "" },
-      { platform: "Twitch", url: "" },
+      { platform: "Facebook", url: "https://www.facebook.com/bezkomprese" },
+      { platform: "Youtube", url: "https://www.youtube.com/@BezKomprese" },
+      { platform: "Twitch", url: "https://www.twitch.tv/bezkomprese" },
     ],
   },
   {
@@ -37,9 +37,9 @@ export const teamMembers: TeamMember[] = [
     bio: "Váš sen utvořím v realitu.",
     photo: "/images/people/robin.jpg",
     socials: [
-      { platform: "Facebook", url: "" },
-      { platform: "Instagram", url: "" },
-      { platform: "Youtube", url: "" },
+      { platform: "Facebook", url: "https://www.facebook.com/RobinValesu" },
+      { platform: "Instagram", url: "https://www.instagram.com/bez_komprese" },
+      { platform: "Youtube", url: "https://www.youtube.com/@ROBINVALES" },
     ],
   },
   {
@@ -48,8 +48,8 @@ export const teamMembers: TeamMember[] = [
     bio: "Mám řešení dříve, než ho potřebujete.",
     photo: "/images/people/petr.jpg",
     socials: [
-      { platform: "Facebook", url: "" },
-      { platform: "Instagram", url: "" },
+      { platform: "Facebook", url: "https://www.facebook.com/motyckapetr" },
+      { platform: "Instagram", url: "https://www.instagram.com/koblihacz/" },
     ],
   },
   {
@@ -58,11 +58,11 @@ export const teamMembers: TeamMember[] = [
     bio: "Když nemůžeš, tak přidej.",
     photo: "/images/people/jakub.jpg",
     socials: [
-      { platform: "Linkedin", url: "" },
-      { platform: "Facebook", url: "" },
-      { platform: "Instagram", url: "" },
-      { platform: "Youtube", url: "" },
-      { platform: "Twitter", url: "" },
+      { platform: "Linkedin", url: "https://www.linkedin.com/in/jakub-pro%C5%A1ek-940814144/" },
+      { platform: "Facebook", url: "https://www.facebook.com/JamesPowiz" },
+      { platform: "Instagram", url: "https://www.instagram.com/powizak/" },
+      { platform: "Youtube", url: "https://youtube.com/@powizak" },
+      { platform: "Twitter", url: "https://twitter.com/powizak" },
     ],
   },
 ];
