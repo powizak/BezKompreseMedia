@@ -33,7 +33,7 @@ const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány
   <section class="section gallery-sections">
     <div class="container">
       {fotoGalleries.map((gallery, i) => (
-        <div class="gallery-section scroll-reveal" data-delay={i * 100}>
+        <div class="gallery-section scroll-reveal" data-delay={i * 100} id={gallery.id}>
           <div class="gallery-section-header">
             <h2 class="gallery-section-title">{gallery.title}</h2>
             <p class="gallery-section-desc">{gallery.description}</p>

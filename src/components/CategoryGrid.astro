@@ -2,7 +2,7 @@
 interface Props {
   heading: string;
   intro: string;
-  categories: { title: string; description: string }[];
+  categories: { title: string; description: string; href?: string }[];
 }
 
 const { heading, intro, categories } = Astro.props;
@@ -17,13 +17,24 @@ const { heading, intro, categories } = Astro.props;
 
     <div class="category-grid-grid">
       {categories.map((cat, i) => (
-        <article
-          class={`category-grid-card scroll-reveal category-grid-card--${i + 1}`}
-          data-delay={i * 100}
-        >
-          <h3 class="category-grid-card__title">{cat.title}</h3>
-          <p class="category-grid-card__desc">{cat.description}</p>
-        </article>
+        cat.href ? (
+          <a
+            href={cat.href}
+            class={`category-grid-card scroll-reveal category-grid-card--${i + 1}`}
+            data-delay={i * 100}
+          >
+            <h3 class="category-grid-card__title">{cat.title}</h3>
+            <p class="category-grid-card__desc">{cat.description}</p>
+          </a>
+        ) : (
+          <article
+            class={`category-grid-card scroll-reveal category-grid-card--${i + 1}`}
+            data-delay={i * 100}
+          >
+            <h3 class="category-grid-card__title">{cat.title}</h3>
+            <p class="category-grid-card__desc">{cat.description}</p>
+          </article>
+        )
       ))}
     </div>
   </div>
@@ -74,6 +85,12 @@ const { heading, intro, categories } = Astro.props;
   .category-grid-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
+  }
+
+  a.category-grid-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
   }
 
   .category-grid-card__title {
