@@ -7,6 +7,7 @@ export interface TeamMember {
   name: string;
   role: string;
   bio: string;
+  photo?: string;
   socials: Social[];
 }
 
@@ -23,6 +24,7 @@ export const teamMembers: TeamMember[] = [
     name: "BezKomprese rodina",
     role: "Tým",
     bio: "Všechny nás spojuje láska k autům a jelikož máme všichni bohaté zkušenosti ve svých oborech, spojit se v jeden silný celek byla jasná volba!",
+    photo: "/images/global/BKTeamVilik.jpg",
     socials: [
       { platform: "Facebook", url: "" },
       { platform: "Youtube", url: "" },
@@ -33,6 +35,7 @@ export const teamMembers: TeamMember[] = [
     name: "Robin Valeš",
     role: "CEO, foto, video, video editor",
     bio: "Váš sen utvořím v realitu.",
+    photo: "/images/people/robin.jpg",
     socials: [
       { platform: "Facebook", url: "" },
       { platform: "Instagram", url: "" },
@@ -43,6 +46,7 @@ export const teamMembers: TeamMember[] = [
     name: "Petr Motyčka",
     role: "Foto, video, komunikace",
     bio: "Mám řešení dříve, než ho potřebujete.",
+    photo: "/images/people/petr.jpg",
     socials: [
       { platform: "Facebook", url: "" },
       { platform: "Instagram", url: "" },
@@ -52,6 +56,7 @@ export const teamMembers: TeamMember[] = [
     name: "Jakub Prošek",
     role: "Web, video, video editor",
     bio: "Když nemůžeš, tak přidej.",
+    photo: "/images/people/jakub.jpg",
     socials: [
       { platform: "Linkedin", url: "" },
       { platform: "Facebook", url: "" },
