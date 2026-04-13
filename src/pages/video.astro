@@ -40,7 +40,7 @@ const noteParts = videoGalleryNote.split('ZDE');
 
   <!-- Gallery sections -->
   {videoGalleries.map((gallery, gi) => (
-    <section class="section gallery-section-wrapper">
+    <section class="section gallery-section-wrapper" id={gallery.id}>
       <div class="container">
         <div class="gallery-section scroll-reveal" data-delay={gi * 100}>
           <div class="gallery-section-header">
