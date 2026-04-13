@@ -13,35 +13,65 @@ import { galerieHero, galerieItems, galerieNote } from '../data/galerie';
 
   <section class="section">
     <div class="container">
-      {galerieItems.map((item) => (
-        <div class="gallery-item scroll-reveal">
-          <h2 class="gallery-item__title">{item.title}</h2>
-          <p class="gallery-item__desc">{item.description}</p>
-          <div class="gallery-item__grid">
-            <div class="gallery-placeholder" data-span="2">
-              <span class="gallery-placeholder__label">Fotografie</span>
+      {galerieItems.map((item, index) => {
+        const initialCount = item.initialCount || 8;
+        const hasMore = item.photos.length > initialCount;
+        return (
+          <div class="gallery-item scroll-reveal">
+            <h2 class="gallery-item__title">{item.title}</h2>
+            <p class="gallery-item__desc">{item.description}</p>
+            <div class="gallery-item__grid">
+              {item.photos.slice(0, initialCount).map((photo) => (
+                <a href={photo.full} class="glightbox gallery-photo" data-gallery={item.title}>
+                  <img src={photo.thumbnail} alt={photo.alt} loading="lazy" decoding="async" />
+                </a>
+              ))}
             </div>
-            <div class="gallery-placeholder">
-              <span class="gallery-placeholder__label">Fotografie</span>
-            </div>
-            <div class="gallery-placeholder">
-              <span class="gallery-placeholder__label">Fotografie</span>
-            </div>
-            <div class="gallery-placeholder" data-span="2">
-              <span class="gallery-placeholder__label">Fotografie</span>
-            </div>
-            <div class="gallery-placeholder">
-              <span class="gallery-placeholder__label">Fotografie</span>
-            </div>
+            {hasMore && (
+              <div class="gallery-item__hidden" id={`gallery-hidden-${index}`}>
+                {item.photos.slice(initialCount).map((photo) => (
+                  <a href={photo.full} class="glightbox gallery-photo" data-gallery={item.title}>
+                    <img src={photo.thumbnail} alt={photo.alt} loading="lazy" decoding="async" />
+                  </a>
+                ))}
+              </div>
+            )}
+            {hasMore && (
+              <button class="gallery-show-more" data-gallery-id={index}>
+                Zobrazit více ({item.photos.length - initialCount} fotek)
+              </button>
+            )}
           </div>
-        </div>
-      ))}
+        );
+      })}
       <p class="gallery-note scroll-reveal">{galerieNote}</p>
     </div>
   </section>
 
   <PageCTA />
 </BaseLayout>
+
+<script>
+  document.querySelectorAll('.gallery-show-more').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const hiddenId = btn.getAttribute('data-gallery-id');
+      const hiddenDiv = document.getElementById(`gallery-hidden-${hiddenId}`);
+      if (hiddenDiv) {
+        const grid = btn.closest('.gallery-item').querySelector('.gallery-item__grid');
+        if (grid) {
+          hiddenDiv.querySelectorAll('.gallery-photo').forEach(photo => {
+            grid.appendChild(photo);
+          });
+        }
+        hiddenDiv.remove();
+        btn.remove();
+        if (window.GLightboxInstance) {
+          window.GLightboxInstance.reload();
+        }
+      }
+    });
+  });
+</script>
 
 <style>
   /* ── Gallery Item ───────────────────────────────── */
@@ -75,61 +105,69 @@ import { galerieHero, galerieItems, galerieNote } from '../data/galerie';
     gap: var(--space-4);
   }
 
-  /* ── Gallery Placeholder ──────────────────────────── */
-  .gallery-placeholder {
-    position: relative;
-    background: var(--color-bg-alt);
-    border: 1px solid var(--color-border);
+  /* ── Gallery Photo ───────────────────────────────── */
+  .gallery-photo {
+    display: block;
     border-radius: var(--radius-md);
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    background: var(--color-bg-alt);
   }
 
-  .gallery-placeholder:hover {
-    border-color: var(--color-brand);
-    box-shadow: var(--shadow-md);
+  .gallery-photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform var(--transition-base);
   }
 
-  .gallery-placeholder__label {
+  .gallery-photo:hover img {
+    transform: scale(1.02);
+  }
+
+  /* ── Hidden photos (before "show more" click) ──── */
+  .gallery-item__hidden {
+    display: none;
+  }
+
+  /* ── Show More Button ───────────────────────────── */
+  .gallery-show-more {
+    display: block;
+    margin: var(--space-8) auto 0;
+    padding: var(--space-3) var(--space-8);
     font-family: var(--font-body);
     font-size: var(--text-sm);
-    font-weight: var(--weight-regular);
-    color: var(--color-text-light);
-    opacity: 0.6;
+    font-weight: var(--weight-bold);
+    color: var(--color-black);
+    background-color: var(--color-brand);
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
   }
 
-  /* Desktop: asymmetric 12-col grid with span variations */
+  .gallery-show-more:hover {
+    background-color: var(--color-brand-dark);
+    transform: translateY(-1px);
+  }
+
+  /* ── Gallery Note ────────────────────────────────── */
+  .gallery-note {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-light);
+    text-align: center;
+  }
+
+  /* Desktop: 4-column grid */
   @media (min-width: 769px) {
     .gallery-item__grid {
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: var(--space-6);
     }
 
-    .gallery-placeholder {
-      min-height: 300px;
-    }
-
-    /* Default single column span */
-    .gallery-placeholder {
-      grid-column: span 4;
-    }
-
-    /* Two column span via data attribute */
-    .gallery-placeholder[data-span="2"] {
-      grid-column: span 6;
-    }
-
-    /* Asymmetric layout - some placeholders taller */
-    .gallery-placeholder:nth-child(1) {
-      min-height: 340px;
-    }
-
-    .gallery-placeholder:nth-child(4) {
-      min-height: 340px;
+    .gallery-item__title {
+      font-size: var(--text-3xl);
     }
   }
 </style>
