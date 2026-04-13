@@ -1,6 +1,7 @@
 export interface Category {
   title: string;
   description: string;
+  href?: string;
 }
 
 export interface PhotoItem {
@@ -12,6 +13,7 @@ export interface GallerySection {
   title: string;
   description: string;
   photos: PhotoItem[];
+  id?: string;
 }
 
 export const fotoHero = {
@@ -21,12 +23,12 @@ export const fotoHero = {
 };
 
 export const fotoCategories: Category[] = [
-  { title: "Svatby", description: "Vytváříme nezapomenutelné video vzpomínky z Vaší svatby." },
-  { title: "Korporátní zákazníci", description: "Profesionální fotografie pro vaše firemní vizuály a události." },
-  { title: "Portréty", description: "Zachycujeme jedinečnost a krásu v každém portrétu." },
-  { title: "Rodinné focení", description: "Společně tvoříme poutavé rodinné vzpomínky na celý život pro generace." },
-  { title: "Reportáže", description: "Fotografie, které vyprávějí silné příběhy a zachycují okamžiky." },
-  { title: "Auta", description: "Vyfotografujeme Vaše vozidlo v tom nejlepším světle, každý detail se počítá." },
+  { title: "Svatby", description: "Vytváříme nezapomenutelné video vzpomínky z Vaší svatby.", href: "#svatby" },
+  { title: "Korporátní zákazníci", description: "Profesionální fotografie pro vaše firemní vizuály a události.", href: "#korporatni" },
+  { title: "Portréty", description: "Zachycujeme jedinečnost a krásu v každém portrétu.", href: "#portrety" },
+  { title: "Rodinné focení", description: "Společně tvoříme poutavé rodinné vzpomínky na celý život pro generace.", href: "#rodinne" },
+  { title: "Reportáže", description: "Fotografie, které vyprávějí silné příběhy a zachycují okamžiky.", href: "#reportaze" },
+  { title: "Auta", description: "Vyfotografujeme Vaše vozidlo v tom nejlepším světle, každý detail se počítá.", href: "#auta" },
 ];
 
 const svatbyPhotos: PhotoItem[] = [
@@ -104,12 +106,12 @@ const autaPhotos: PhotoItem[] = [
 ];
 
 export const fotoGalleries: GallerySection[] = [
-  { title: "Svatební fotografie", description: "Naše fotografie svateb jsou více než jen záznamem události – jsou emocionální cestou, která zvýrazňuje lásku a radost novomanželů.", photos: svatbyPhotos },
-  { title: "Portréty", description: "Každý portrét, který vytvoříme, je jedinečným vyjádřením osobnosti a krásy jednotlivce.", photos: portretyPhotos },
-  { title: "Rodinné focení", description: "S láskou a trpělivostí zachycujeme radostné chvíle plné rodinné sounáležitosti a poutavých momentů.", photos: rodinaPhotos },
-  { title: "Reportáže", description: "Bez ohledu na to, zda dokumentujeme kulturní akce, sportovní události nebo každodenní život. Naším cílem je zachytit autentičnost a atmosféru daného okamžiku.", photos: reportazPhotos },
-  { title: "Korporátní zákazníci", description: "S důrazem na firemní identitu přinášíme fotografie, které zaujmou a osloví Vaše potencionální zákazníky.", photos: korporatPhotos },
-  { title: "Auta", description: "S inovativními technikami a kreativním přístupem přinášíme fotografie, které přesně odhalují jedinečnost a krásu každého automobilu.", photos: autaPhotos },
+  { title: "Svatební fotografie", description: "Naše fotografie svateb jsou více než jen záznamem události – jsou emocionální cestou, která zvýrazňuje lásku a radost novomanželů.", photos: svatbyPhotos, id: "svatby" },
+  { title: "Portréty", description: "Každý portrét, který vytvoříme, je jedinečným vyjádřením osobnosti a krásy jednotlivce.", photos: portretyPhotos, id: "portrety" },
+  { title: "Rodinné focení", description: "S láskou a trpělivostí zachycujeme radostné chvíle plné rodinné sounáležitosti a poutavých momentů.", photos: rodinaPhotos, id: "rodinne" },
+  { title: "Reportáže", description: "Bez ohledu na to, zda dokumentujeme kulturní akce, sportovní události nebo každodenní život. Naším cílem je zachytit autentičnost a atmosféru daného okamžiku.", photos: reportazPhotos, id: "reportaze" },
+  { title: "Korporátní zákazníci", description: "S důrazem na firemní identitu přinášíme fotografie, které zaujmou a osloví Vaše potencionální zákazníky.", photos: korporatPhotos, id: "korporatni" },
+  { title: "Auta", description: "S inovativními technikami a kreativním přístupem přinášíme fotografie, které přesně odhalují jedinečnost a krásu každého automobilu.", photos: autaPhotos, id: "auta" },
 ];
 
 export const fotoGalleryNote = "Kromě ukázek níže se můžete podívat i na veškeré naše veřejné galerie ZDE.";
