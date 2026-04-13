@@ -1,0 +1,166 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceHero from '../components/ServiceHero.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { cenikHero, cenikSections } from '../data/cenik';
+---
+
+<BaseLayout
+  title="Ceník - BezKomprese Media"
+  description="Ceník jednotlivých služeb, které si u nás můžete objednat. Od fotografií, přes video či webové stránky až po vytváření fyzických produktů právě pro Vás."
+>
+  <ServiceHero
+    title={cenikHero.title}
+    subtitle={cenikHero.subtitle}
+    intro={cenikHero.intro}
+  />
+
+  {cenikSections.map((section, i) => (
+    <section class="section pricing-section" id={section.id}>
+      <div class="container">
+        <header class="pricing-header scroll-reveal">
+          <h2 class="pricing-heading">{section.title}</h2>
+          <p class="pricing-intro">{section.description}</p>
+        </header>
+
+        <div class={`pricing-grid pricing-grid--${section.columns} scroll-reveal`} data-delay={i * 50}>
+          {section.cards.map((card) => (
+            <article class="pricing-card">
+              <h3 class="pricing-card__title">{card.title}</h3>
+              <p class="pricing-card__price">{card.price}</p>
+              {card.description && (
+                <p class="pricing-card__desc">{card.description}</p>
+              )}
+              {card.detail && (
+                <p class="pricing-card__detail">{card.detail}</p>
+              )}
+            </article>
+          ))}
+        </div>
+
+        {section.note && (
+          <p class="pricing-note scroll-reveal" data-delay={i * 50 + 50}>{section.note}</p>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <PageCTA showPriceLink={false} />
+</BaseLayout>
+
+<style>
+  /* === Section === */
+  .pricing-section + .pricing-section {
+    padding-top: 0;
+  }
+
+  /* === Header === */
+  .pricing-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .pricing-heading {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .pricing-intro {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+  }
+
+  /* === Grid: mobile-first === */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  /* === Card === */
+  .pricing-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-brand);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    position: relative;
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .pricing-card__title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-3);
+  }
+
+  .pricing-card__price {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-brand-dark);
+    margin-bottom: var(--space-4);
+  }
+
+  .pricing-card__desc {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+    margin-bottom: var(--space-3);
+  }
+
+  .pricing-card__detail {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    font-style: italic;
+    color: var(--color-text-light);
+    opacity: 0.8;
+  }
+
+  /* === Note === */
+  .pricing-note {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+    font-style: italic;
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+    margin-top: var(--space-8);
+  }
+
+  /* === Desktop breakpoint === */
+  @media (min-width: 769px) {
+    .pricing-intro {
+      font-size: var(--text-lg);
+    }
+
+    .pricing-grid--2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pricing-grid--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .pricing-grid--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pricing-grid--4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
