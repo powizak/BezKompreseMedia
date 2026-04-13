@@ -43,7 +43,7 @@ const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány
               {gallery.photos.map((photo) => (
                 <a href={photo.src} class="glightbox gallery-photo" data-gallery={gallery.title}>
                   <img
-                    src={photo.src}
+                    src={photo.src.replace('.jpg', '_600.webp')}
                     alt={photo.alt}
                     loading="lazy"
                     decoding="async"
