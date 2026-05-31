@@ -11,45 +11,33 @@
     return;
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
+  function makeHandler(obs) {
+    return (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const delay = entry.target.dataset.delay || 0;
           setTimeout(() => {
             entry.target.classList.add('visible');
           }, Number(delay));
-          observer.unobserve(entry.target);
+          obs.unobserve(entry.target);
         }
       });
-    },
-    {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px',
-    }
-  );
+    };
+  }
 
+  // Group elements by threshold to minimize IntersectionObserver instances
+  const groups = new Map();
   elements.forEach((el) => {
-    const customThreshold = el.dataset.threshold;
-    if (customThreshold) {
-      // Create a separate observer for custom thresholds if needed
-      const customObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const delay = entry.target.dataset.delay || 0;
-              setTimeout(() => {
-                entry.target.classList.add('visible');
-              }, Number(delay));
-              customObserver.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: Number(customThreshold), rootMargin: '0px 0px -50px 0px' }
-      );
-      customObserver.observe(el);
-    } else {
-      observer.observe(el);
-    }
+    const key = el.dataset.threshold || '0.15';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(el);
   });
+
+  for (const [threshold, els] of groups) {
+    const observer = new IntersectionObserver(makeHandler(observer), {
+      threshold: Number(threshold),
+      rootMargin: '0px 0px -50px 0px',
+    });
+    els.forEach((el) => observer.observe(el));
+  }
 })();
