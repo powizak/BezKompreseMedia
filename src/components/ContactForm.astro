@@ -1,5 +1,6 @@
 ---
-// ContactForm.astro — Kontaktujte nás section with standard HTML POST form
+const hcaptchaSiteKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY;
+const csrfSecret = import.meta.env.PUBLIC_CSRF_SECRET || 'bkmedia_csrf_2026';
 ---
 
 <section class="section contact-section">
@@ -8,6 +9,7 @@
       <h2 class="contact-heading">Kontaktujte nás</h2>
 
       <form class="contact-form" method="POST" action="/contact-handler.php">
+        <input type="hidden" name="csrf_token" id="csrf_token" />
         <div class="form-field">
           <input
             type="text"
@@ -57,7 +59,7 @@
         </div>
 
         <div class="form-field hcaptcha-field">
-          <div class="h-captcha" data-sitekey="HCAPTCHA_SITE_KEY"></div>
+          <div class="h-captcha" data-sitekey={hcaptchaSiteKey}></div>
         </div>
 
         <button type="submit" class="btn-submit">Odeslat poptávku</button>
@@ -67,6 +69,22 @@
 </section>
 
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+<script define:vars={{ csrfSecret }}>
+  // Generate time-based HMAC CSRF token using Web Crypto API
+  async function generateCsrfToken() {
+    const window_ = Math.floor(Date.now() / 3600000);
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      'raw', encoder.encode(csrfSecret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+    );
+    const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(String(window_)));
+    const hash = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
+    const field = document.getElementById('csrf_token');
+    if (field) field.value = hash;
+  }
+  generateCsrfToken();
+</script>
 
 <style>
   .contact-section {

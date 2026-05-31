@@ -2,7 +2,7 @@
 // Configuration
 $recipient = 'info@bezkompresemedia.cz';
 $subject = 'Nová poptávka z bezkompresemedia.cz';
-$hcaptcha_secret = 'HCAPTCHA_SECRET_KEY'; // Replace with actual secret
+$hcaptcha_secret = getenv('HCAPTCHA_SECRET_KEY');
 
 // Start session for rate limiting
 session_start();
@@ -30,6 +30,39 @@ if (count($_SESSION['form_submissions']) >= $max_submissions) {
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo 'Metoda není povolena.';
+    exit;
+}
+
+// CSRF: Verify Origin header matches expected domain
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$allowed_origins = ['https://bezkompresemedia.cz', 'https://www.bezkompresemedia.cz'];
+if ($origin && !in_array($origin, $allowed_origins)) {
+    http_response_code(403);
+    echo 'Neplatný zdroj požadavku.';
+    exit;
+}
+
+// CSRF: Validate time-based HMAC token (valid for 1 hour)
+$csrf_token = $_POST['csrf_token'] ?? '';
+$csrf_secret = getenv('CSRF_SECRET') ?: 'bkmedia_csrf_2026';
+if (empty($csrf_token)) {
+    http_response_code(400);
+    echo 'Chybí CSRF token.';
+    exit;
+}
+// Check current and previous 1-hour window
+$valid = false;
+for ($i = 0; $i <= 1; $i++) {
+    $window = floor(time() / 3600) - $i;
+    $expected = hash_hmac('sha256', (string)$window, $csrf_secret);
+    if (hash_equals($expected, $csrf_token)) {
+        $valid = true;
+        break;
+    }
+}
+if (!$valid) {
+    http_response_code(403);
+    echo 'CSRF token vypršel. Zkuste to prosím znovu.';
     exit;
 }
 
