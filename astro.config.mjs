@@ -6,6 +6,8 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   integrations: [sitemap()],
+  // Passthrough preserves raw photo URLs in galleries (public/images/).
+  // Images imported from src/assets/ are still processed by Sharp at build time.
   image: {
     service: passthroughImageService(),
     remotePatterns: [
