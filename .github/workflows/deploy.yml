@@ -47,5 +47,6 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          # WEDOS document root; change if your webspace layout differs
-          server-dir: www/
+          # The FTP account root IS the document root on this WEDOS webspace
+          # (verified 2026-07-17: server-dir www/ created a /www/ subfolder)
+          server-dir: ./

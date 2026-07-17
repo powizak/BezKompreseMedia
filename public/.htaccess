@@ -3,6 +3,9 @@
 # WEDOS Hosting
 # ===================================
 
+# Prefer the static site's index.html over any leftover index.php
+DirectoryIndex index.html index.php
+
 # Enable Rewrite Engine
 RewriteEngine On
 
