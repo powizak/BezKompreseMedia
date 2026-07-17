@@ -7,5 +7,10 @@ export default defineConfig({
   site: 'https://bezkompresemedia.cz',
   output: 'static',
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // /dekujeme/ is a noindex thank-you page — keep it out of the sitemap
+      filter: (page) => !page.includes('/dekujeme/'),
+    }),
+  ],
 });
