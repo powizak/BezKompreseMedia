@@ -2,23 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { contactIntro, contactAddress, contactOpeningHours } from '../data/contact.ts';
-
-const sent = Astro.url.searchParams.get('sent') === '1';
 ---
+
 <BaseLayout title="Kontakt - BezKomprese Media">
   <section class="section container">
     <h1>Kontakt</h1>
     <p class="contact-intro scroll-reveal">{contactIntro}</p>
 
-    {sent ? (
-      <div class="thank-you scroll-reveal">
-        <h2>Děkujeme za Vaši poptávku!</h2>
-        <p>Ozveme se Vám co nejdříve.</p>
-        <a href="/contact/">Zpět na formulář</a>
-      </div>
-    ) : (
-      <ContactForm />
-    )}
+    <ContactForm />
 
     <div class="contact-info">
       <div class="contact-info__block scroll-reveal">
@@ -27,16 +18,26 @@ const sent = Astro.url.searchParams.get('sent') === '1';
           <p>{contactAddress.name}</p>
           <p>{contactAddress.street}</p>
           <p>{contactAddress.city}</p>
-          <p><a href={`tel:${contactAddress.phone.replace(/\s/g, '')}`}>{contactAddress.phoneLabel}</a></p>
+          <p>
+            <a href={`tel:${contactAddress.phone.replace(/\s/g, '')}`}
+              >{contactAddress.phoneLabel}</a>
+          </p>
           <p><a href={`mailto:${contactAddress.email}`}>{contactAddress.email}</a></p>
         </address>
       </div>
       <div class="contact-info__block scroll-reveal">
         <h3>Otevírací doba</h3>
         <ul>
-          {contactOpeningHours.map((item) => (
-            <li><span>{item.day}</span><span>{item.time}</span></li>
-          ))}
+          {
+            contactOpeningHours.map((item) => (
+              <li>
+                <>
+                  <span>{item.day}</span>
+                  <span>{item.time}</span>
+                </>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>
@@ -50,41 +51,6 @@ const sent = Astro.url.searchParams.get('sent') === '1';
     max-width: 720px;
     margin-top: var(--space-4);
     margin-bottom: var(--space-12);
-  }
-
-  .thank-you {
-    text-align: center;
-    padding: var(--space-12) var(--space-8);
-    background-color: var(--color-brand-subtle);
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--space-12);
-    border: 2px solid var(--color-brand);
-  }
-
-  .thank-you h2 {
-    color: var(--color-brand-dark);
-    margin-bottom: var(--space-4);
-  }
-
-  .thank-you p {
-    color: var(--color-text);
-    margin-bottom: var(--space-6);
-    font-size: var(--text-lg);
-  }
-
-  .thank-you a {
-    display: inline-block;
-    padding: var(--space-3) var(--space-6);
-    background-color: var(--color-brand);
-    color: var(--color-black);
-    font-family: var(--font-display);
-    font-weight: var(--weight-bold);
-    border-radius: var(--radius-md);
-    transition: background-color var(--transition-fast);
-  }
-
-  .thank-you a:hover {
-    background-color: var(--color-brand-dark);
   }
 
   .contact-info {

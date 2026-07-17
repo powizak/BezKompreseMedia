@@ -16,26 +16,28 @@ const { heading, intro, categories } = Astro.props;
     </header>
 
     <div class="category-grid-grid">
-      {categories.map((cat, i) => (
-        cat.href ? (
-          <a
-            href={cat.href}
-            class={`category-grid-card scroll-reveal category-grid-card--${i + 1}`}
-            data-delay={i * 100}
-          >
-            <h3 class="category-grid-card__title">{cat.title}</h3>
-            <p class="category-grid-card__desc">{cat.description}</p>
-          </a>
-        ) : (
-          <article
-            class={`category-grid-card scroll-reveal category-grid-card--${i + 1}`}
-            data-delay={i * 100}
-          >
-            <h3 class="category-grid-card__title">{cat.title}</h3>
-            <p class="category-grid-card__desc">{cat.description}</p>
-          </article>
+      {
+        categories.map((cat, i) =>
+          cat.href ? (
+            <a
+              href={cat.href}
+              class={`category-grid-card scroll-reveal category-grid-card--${i + 1}`}
+              data-delay={i * 100}
+            >
+              <h3 class="category-grid-card__title">{cat.title}</h3>
+              <p class="category-grid-card__desc">{cat.description}</p>
+            </a>
+          ) : (
+            <article
+              class={`category-grid-card scroll-reveal category-grid-card--${i + 1}`}
+              data-delay={i * 100}
+            >
+              <h3 class="category-grid-card__title">{cat.title}</h3>
+              <p class="category-grid-card__desc">{cat.description}</p>
+            </article>
+          ),
         )
-      ))}
+      }
     </div>
   </div>
 </section>

@@ -18,7 +18,7 @@ Statický web pro [bezkompresemedia.cz](https://bezkompresemedia.cz) postavený 
 |---|---|
 | Framework | Astro 6.x (static output) |
 | Styly | CSS custom properties (žádný preprocessor) |
-| Fonty | Space Grotesk (nadpisy) + Inter (text) — 400, 700 |
+| Fonty | Space Grotesk (nadpisy) + Inter (text) — 400, 700, self-hosted přes [Fontsource](https://fontsource.org/) |
 | Formulář | PHP handler s hCaptcha ochranou |
 | Hosting | WEDOS (Apache, PHP) |
 | Cookie banner | CookieYes |
@@ -32,7 +32,7 @@ bkm-web/
 │   ├── contact-handler.php  # PHP formulářový handler (hCaptcha validace)
 │   ├── .htaccess            # Apache: HTTPS redirect, gzip, caching, security headers
 │   ├── robots.txt           # SEO directives
-│   ├── images/references/   # Loga referencí (PNG/WebP)
+│   ├── images/              # Fotogalerie (servírované beze změny, s _600.webp náhledy)
 │   └── favicon*             # Favikony
 ├── src/
 │   ├── pages/               # Stránky (Astro komponenty → routování podle názvu souboru)
@@ -72,7 +72,7 @@ npm run preview
 
 ## Konfigurace
 
-### Proměnné prostředí
+### Proměnné prostředí (lokální vývoj)
 
 Zkopírujte `.env.example` do `.env` a doplňte skutečné hodnoty:
 
@@ -82,93 +82,39 @@ cp .env.example .env
 
 | Proměnná | Popis | Kde získat |
 |---|---|---|
-| `COOKIEYES_ID` | CookieYes site ID | [cookieyes.com](https://www.cookieyes.com/) → Settings |
-| `HCAPTCHA_SITE_KEY` | hCaptcha site key (veřejná) | [dashboard.hcaptcha.com](https://dashboard.hcaptcha.com/) |
+| `PUBLIC_COOKIEYES_ID` | CookieYes site ID | [cookieyes.com](https://www.cookieyes.com/) → Settings |
+| `PUBLIC_HCAPTCHA_SITE_KEY` | hCaptcha site key (veřejná) | [dashboard.hcaptcha.com](https://dashboard.hcaptcha.com/) |
 | `HCAPTCHA_SECRET_KEY` | hCaptcha secret key (tajná) | hCaptcha dashboard |
 
-### CookieYes
+Hodnoty s prefixem `PUBLIC_` se při buildu zapečou do HTML. Nikde v kódu nejsou hardcoded — vše se čte z `.env` (lokálně) nebo z GitHub Secrets (CI).
 
-V `src/layouts/BaseLayout.astro` je odkaz na CookieYes script. Aktuálně je nakonfigurované ID `a7112a29b80640e7b97f9df6` (hardcoded v layoutu). Pro změnu ID upravte URL scriptu v `<head>` sekci layoutu.
+## Nasazení (GitHub Actions → WEDOS FTP)
 
-### hCaptcha
+Každý push do větve `master` automaticky spustí build a nahraje `dist/` na WEDOS přes FTP (`.github/workflows/deploy.yml`). Workflow jde spustit i ručně (Actions → Build & Deploy → Run workflow).
 
-1. Zaregistrujte se na [hcaptcha.com](https://www.hcaptcha.com/)
-2. Vytvořte nový site — přidejte doménu `bezkompresemedia.cz`
-3. Site Key vložte do `src/components/ContactForm.astro` (nahraďte placeholder)
-4. Secret Key vložte do `public/contact-handler.php` (nahraďte placeholder)
+### Potřebné GitHub Secrets
 
-## Nasazení na WEDOS (FTP)
+V repozitáři: **Settings → Secrets and variables → Actions → New repository secret**
 
-### Příprava
+| Secret | Popis |
+|---|---|
+| `PUBLIC_HCAPTCHA_SITE_KEY` | hCaptcha site key (zapeče se do HTML) |
+| `PUBLIC_COOKIEYES_ID` | CookieYes site ID (zapeče se do HTML) |
+| `HCAPTCHA_SECRET_KEY` | hCaptcha secret key — při deployi se zapíše do `config.php` na serveru (přímý přístup k souboru blokuje `.htaccess`) |
+| `FTP_SERVER` | FTP host z WEDOS administrace (Hosting → FTP), např. `ftp.bezkompresemedia.cz` |
+| `FTP_USER` | FTP uživatel |
+| `FTP_PASSWORD` | FTP heslo |
 
-1. Spusťte produkční build:
+Workflow nahrává do adresáře `www/` (standardní document root WEDOSu). Pokud má webspace jinou strukturu, upravte `server-dir` v `deploy.yml`.
 
-   ```bash
-   npm run build
-   ```
-
-2. Výsledný adresář `dist/` obsahuje vše pro nasazení:
-   - Statické HTML stránky
-   - Optimalizované obrázky (WebP)
-   - CSS a JavaScript
-   - PHP formulářový handler
-   - `.htaccess` a `robots.txt`
-
-### FTP nahrání
-
-**Přihlášení:** Údaje najdete ve WEDOS administraci → Hosting → FTP
-
-1. Připojte se na FTP (např. pomocí [FileZilla](https://filezilla-project.org/), [WinSCP](https://winscp.net/) nebo příkazovou řádkou)
-
-2. **Smažte** starý obsah na serveru
-   - Pokud na serveru běží WordPress nebo jiný starý web, smažte jeho soubory z document root
-   - ⚠️ **Zálohujte si** `wp-config.php` a `wp-content/uploads/` pokud potřebujete zachovat data
-   - Smažte vše kromě adresářů, které chcete zachovat
-
-3. Nahrajte **celý obsah** adresáře `dist/` do document root na serveru
-   - Všechny soubory a adresáře z `dist/` → do rootu webu
-   - Struktura na serveru musí vypadat takto:
-
-   ```
-   /index.html
-   /contact/index.html
-   /foto/index.html
-   /nas-tym/index.html
-   /video/index.html
-   /web/index.html
-   /socialni-site/index.html
-   /galerie/index.html
-   /contact-handler.php
-   /.htaccess
-   /robots.txt
-   /sitemap-index.xml
-   /images/              ← loga referencí
-   /_astro/              ← CSS, JS, optimalizované obrázky
-   ```
-
-4. **Ověřte** že PHP funguje — navštivte web a otestujte kontaktní formulář
-
-### FTP přes příkazovou řádku (lftp)
-
-```bash
-# Build
-npm run build
-
-# Nahrání přes lftp (instalace: sudo apt install lftp)
-lftp -u "FTP_USER,FTP_PASSWORD" "ftp://ftp.bezkompresemedia.cz" <<EOF
-  mirror --reverse --delete --verbose dist/ /
-  quit
-EOF
-```
-
-Poznámka: WEDOS běžně nepodporuje SSH/rsync, proto je FTP primární metoda nasazení.
+Poznámka: WEDOS nepodporuje SSH/rsync ani nastavení proměnných prostředí, proto FTP + generovaný `config.php`.
 
 ### Po nasazení — kontrolní seznam
 
 - [ ] Web načte na `https://bezkompresemedia.cz/`
-- [ ] HTTPS přesměrování funguje (http → https)
-- [ ] Všechny navigační odkazy fungují (Domů, Náš tým, Foto, Video, Web, Sociální sítě, Galerie, Kontakt)
-- [ ] Kontaktní formulář odesílá emaily (test s reálným hCaptcha)
+- [ ] HTTPS a www → bez-www přesměrování funguje
+- [ ] Všechny navigační odkazy fungují (Domů, Náš tým, Foto, Video, Web, Sociální sítě, Galerie, Ceník, Kontakt)
+- [ ] Kontaktní formulář odesílá emaily (test s reálným hCaptcha) a přesměruje na `/dekujeme/`
 - [ ] CookieYes banner se zobrazí
 - [ ] Mobilní verze vypadá správně
 - [ ] Rychlost načítání je dobrá ([PageSpeed Insights](https://pagespeed.web.dev/))
@@ -221,7 +167,7 @@ V projektu jsme toto ošetřili vynucením instalace Windows binárek přes `dep
 |---|---|
 | Texty sekcí homepage | `src/components/*.astro` |
 | Obrázky | `src/assets/` (Astro je automaticky optimalizuje) |
-| Loga referencí | `public/images/references/` + upravte `References.astro` |
+| Loga referencí | `src/assets/references/` + upravte `References.astro` |
 | Barvy a design tokeny | `src/styles/global.css` |
 | SEO meta tagy | `src/layouts/BaseLayout.astro` (výchozí hodnoty) nebo props jednotlivých stránek |
 | Kontantní údaje | Footer v `src/layouts/BaseLayout.astro` |

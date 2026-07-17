@@ -1,20 +1,26 @@
 ---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/700.css';
 import '../styles/global.css';
-import 'glightbox/dist/css/glightbox.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = 'BezKomprese Media - Budujeme Vaši digitální identitu',
   description = 'BezKomprese Media - Profesionální fotografie, video, tvorba webových stránek, správa sociálních sítí, vše, co posune Vaši firmu kupředu v digitálním světě.',
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const cookieYesId = import.meta.env.PUBLIC_COOKIEYES_ID;
 
 const allPages = [
   { label: 'Domů', href: '/', footer: false },
@@ -28,7 +34,7 @@ const allPages = [
 ];
 
 const navItems = allPages;
-const footerServices = allPages.filter(p => p.footer);
+const footerServices = allPages.filter((p) => p.footer);
 ---
 
 <!doctype html>
@@ -40,7 +46,7 @@ const footerServices = allPages.filter(p => p.footer);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -62,16 +68,17 @@ const footerServices = allPages.filter(p => p.footer);
     <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180.png" />
     <link rel="apple-touch-icon" href="/favicon-180.png" />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- CookieYes Consent Banner -->
-    <script id="cookieyes" type="text/javascript" src={`https://cdn-cookieyes.com/client-data/${import.meta.env.PUBLIC_COOKIEYES_ID}/script.js`}></script>
+    <!-- CookieYes Consent Banner (deferred so it does not block rendering) -->
+    {
+      cookieYesId && (
+        <script
+          id="cookieyes"
+          type="text/javascript"
+          defer
+          src={`https://cdn-cookieyes.com/client-data/${cookieYesId}/script.js`}
+        />
+      )
+    }
   </head>
   <body>
     <SiteHeader navItems={navItems} />
@@ -93,68 +100,5 @@ const footerServices = allPages.filter(p => p.footer);
         hamburger.setAttribute('aria-expanded', String(isOpen));
       });
     </script>
-
-    <script>
-      import GLightbox from 'glightbox';
-      const lightbox = GLightbox({
-        selector: '.glightbox',
-        touchNavigation: true,
-        loop: true,
-        zoomable: true,
-      });
-      window.GLightboxInstance = lightbox;
-    </script>
-
-    <style is:global>
-      /* GLightbox overrides */
-      .goverlay {
-        background: rgba(0, 0, 0, 0.92) !important;
-      }
-
-      .gclose,
-      .gprev,
-      .gnext {
-        color: rgba(255, 255, 255, 0.9) !important;
-        transition: color 150ms ease !important;
-      }
-
-      .gclose:hover,
-      .gprev:hover,
-      .gnext:hover {
-        color: var(--color-brand) !important;
-      }
-
-      .gclose svg,
-      .gprev svg,
-      .gnext svg {
-        width: 28px;
-        height: 28px;
-      }
-
-      .gcounter {
-        color: rgba(255, 255, 255, 0.8);
-        font-family: var(--font-body);
-        font-size: 14px;
-      }
-
-      .gslide-image img {
-        max-height: 90vh;
-        object-fit: contain;
-      }
-
-      @media (max-width: 768px) {
-        .gclose svg,
-        .gprev svg,
-        .gnext svg {
-          width: 24px;
-          height: 24px;
-        }
-
-        .gprev,
-        .gnext {
-          padding: 8px;
-        }
-      }
-    </style>
   </body>
 </html>

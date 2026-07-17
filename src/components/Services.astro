@@ -11,28 +11,32 @@ const services = [
     href: '/foto/',
     icon: linkedCamera,
     alt: 'Ikona fotoaparátu',
-    description: 'Naše fotografické služby nejsou pouze o pořizování snímků. Jsou o zachycení podstaty chvilek a přetvoření jich na nezapomenutelné vzpomínky.',
+    description:
+      'Naše fotografické služby nejsou pouze o pořizování snímků. Jsou o zachycení podstaty chvilek a přetvoření jich na nezapomenutelné vzpomínky.',
   },
   {
     title: 'Video',
     href: '/video/',
     icon: shutter,
     alt: 'Ikona čočky fotoaparátu',
-    description: 'V Bezkomprese media nejde ve videu pouze o pohybující se obrázky. Jde o vytváření poutavých videí, která oslovují vaši cílovou skupinu a přivádějí Vaše příběhy k životu.',
+    description:
+      'V Bezkomprese media nejde ve videu pouze o pohybující se obrázky. Jde o vytváření poutavých videí, která oslovují vaši cílovou skupinu a přivádějí Vaše příběhy k životu.',
   },
   {
     title: 'Web',
     href: '/web/',
     icon: wwwIcon,
     alt: 'Ikona webu',
-    description: 'Naše webové prezentace jsou více než jen esteticky příjemné stránky. Jsou to digitální prostředky, které reflektují jedinečnost Vaší firmy.',
+    description:
+      'Naše webové prezentace jsou více než jen esteticky příjemné stránky. Jsou to digitální prostředky, které reflektují jedinečnost Vaší firmy.',
   },
   {
     title: 'Sociální sítě',
     href: '/socialni-site/',
     icon: socialNetwork,
     alt: 'Ikona sociálních sítí',
-    description: 'Sestavujeme strategie, které nejen rozvíjejí Vaši přítomnost, ale také budují hluboké spojení s Vaším publikem prostřednictvím cílené interakce a obsahu, který oslovuje a angažuje.',
+    description:
+      'Sestavujeme strategie, které nejen rozvíjejí Vaši přítomnost, ale také budují hluboké spojení s Vaším publikem prostřednictvím cílené interakce a obsahu, který oslovuje a angažuje.',
   },
 ];
 ---
@@ -42,29 +46,41 @@ const services = [
     <header class="services-header scroll-reveal">
       <h2 class="services-heading">Co nabízíme</h2>
       <p class="services-intro">
-        Veškeré naše jednotlivé služby jsou poskytovány na profesionální úrovni a nemusíte se bát jakoukoliv z nich využít. Pokud nenajdete kategorii, kterou hledáte, i tak se <a href="/contact/" class="services-link">neváhejte ozvat</a>.
+        Veškeré naše jednotlivé služby jsou poskytovány na profesionální úrovni a nemusíte se bát
+        jakoukoliv z nich využít. Pokud nenajdete kategorii, kterou hledáte, i tak se <a
+          href="/contact/"
+          class="services-link">neváhejte ozvat</a
+        >.
       </p>
     </header>
 
     <div class="services-grid">
-      {services.map((service, i) => (
-        <article
-          class={`services-card scroll-reveal services-card--${i + 1}`}
-          data-delay={i * 100}
-        >
-          <div class="services-card__icon">
-            <Image src={service.icon} alt={service.alt} width={40} height={40} />
-          </div>
-          <h3 class="services-card__title">{service.title}</h3>
-          <p class="services-card__desc">{service.description}</p>
-          <a href={service.href} class="services-card__cta">
-            Zjistit více
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </article>
-      ))}
+      {
+        services.map((service, i) => (
+          <article
+            class={`services-card scroll-reveal services-card--${i + 1}`}
+            data-delay={i * 100}
+          >
+            <div class="services-card__icon">
+              <Image src={service.icon} alt={service.alt} width={40} height={40} />
+            </div>
+            <h3 class="services-card__title">{service.title}</h3>
+            <p class="services-card__desc">{service.description}</p>
+            <a href={service.href} class="services-card__cta">
+              Zjistit více
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -182,7 +198,9 @@ const services = [
     font-size: var(--text-sm);
     font-weight: var(--weight-bold);
     color: var(--color-text);
-    transition: color var(--transition-fast), gap var(--transition-fast);
+    transition:
+      color var(--transition-fast),
+      gap var(--transition-fast);
   }
 
   .services-card__cta:hover {

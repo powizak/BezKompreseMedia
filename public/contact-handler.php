@@ -1,8 +1,11 @@
 <?php
-// Configuration
-$recipient = 'info@bezkompresemedia.cz';
+// Configuration — secrets come from config.php (generated at deploy time by
+// GitHub Actions from repository secrets, never committed) with getenv() as
+// a fallback for environments that provide real env vars.
+$config = file_exists(__DIR__ . '/config.php') ? include __DIR__ . '/config.php' : [];
+$hcaptcha_secret = $config['hcaptcha_secret'] ?? getenv('HCAPTCHA_SECRET_KEY');
+$recipient = $config['contact_recipient'] ?? 'info@bezkompresemedia.cz';
 $subject = 'Nová poptávka z bezkompresemedia.cz';
-$hcaptcha_secret = getenv('HCAPTCHA_SECRET_KEY');
 
 // Start session for rate limiting
 session_start();
@@ -42,34 +45,10 @@ if ($origin && !in_array($origin, $allowed_origins)) {
     exit;
 }
 
-// CSRF: Validate time-based HMAC token (valid for 1 hour)
-$csrf_token = $_POST['csrf_token'] ?? '';
-$csrf_secret = getenv('CSRF_SECRET') ?: 'bkmedia_csrf_2026';
-if (empty($csrf_token)) {
-    http_response_code(400);
-    echo 'Chybí CSRF token.';
-    exit;
-}
-// Check current and previous 1-hour window
-$valid = false;
-for ($i = 0; $i <= 1; $i++) {
-    $window = floor(time() / 3600) - $i;
-    $expected = hash_hmac('sha256', (string)$window, $csrf_secret);
-    if (hash_equals($expected, $csrf_token)) {
-        $valid = true;
-        break;
-    }
-}
-if (!$valid) {
-    http_response_code(403);
-    echo 'CSRF token vypršel. Zkuste to prosím znovu.';
-    exit;
-}
-
 // Honeypot check
 if (!empty($_POST['url'])) {
     // Bot detected — silently redirect
-    header('Location: /contact/?sent=1');
+    header('Location: /dekujeme/');
     exit;
 }
 
@@ -96,6 +75,12 @@ if (!$email) {
 }
 
 // hCaptcha verification
+if (empty($hcaptcha_secret)) {
+    http_response_code(500);
+    echo 'Formulář není správně nakonfigurován. Kontaktujte nás prosím emailem.';
+    exit;
+}
+
 $hcaptcha_response = $_POST['h-captcha-response'] ?? '';
 if (empty($hcaptcha_response)) {
     http_response_code(400);
@@ -158,7 +143,6 @@ if (!$mail_sent) {
 // Record submission for rate limiting
 $_SESSION['form_submissions'][] = time();
 
-// Redirect to thank you
-header('Location: /contact/?sent=1');
+// Redirect to thank-you page
+header('Location: /dekujeme/');
 exit;
-?>

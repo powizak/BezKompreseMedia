@@ -1,61 +1,32 @@
 ---
 const hcaptchaSiteKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY;
-const csrfSecret = import.meta.env.PUBLIC_CSRF_SECRET || 'bkmedia_csrf_2026';
 ---
 
-<section class="section contact-section">
+<section class="section contact-section" id="form">
   <div class="container">
     <div class="scroll-reveal">
       <h2 class="contact-heading">Kontaktujte nás</h2>
 
       <form class="contact-form" method="POST" action="/contact-handler.php">
-        <input type="hidden" name="csrf_token" id="csrf_token" />
         <div class="form-field">
-          <input
-            type="text"
-            name="jmeno"
-            required
-            placeholder="Jméno *"
-            autocomplete="name"
-          />
+          <input type="text" name="jmeno" required placeholder="Jméno *" autocomplete="name" />
         </div>
 
         <div class="form-field">
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="Email *"
-            autocomplete="email"
-          />
+          <input type="email" name="email" required placeholder="Email *" autocomplete="email" />
         </div>
 
         <div class="form-field">
-          <input
-            type="tel"
-            name="telefon"
-            placeholder="Telefonní číslo"
-            autocomplete="tel"
-          />
+          <input type="tel" name="telefon" placeholder="Telefonní číslo" autocomplete="tel" />
         </div>
 
         <div class="form-field">
-          <textarea
-            name="poptavka"
-            required
-            placeholder="Vaše poptávka *"
-            rows="5"
-          ></textarea>
+          <textarea name="poptavka" required placeholder="Vaše poptávka *" rows="5"></textarea>
         </div>
 
         <!-- Honeypot — hidden from real users, bots will fill it -->
         <div style="display:none" aria-hidden="true">
-          <input
-            type="text"
-            name="url"
-            tabindex="-1"
-            autocomplete="off"
-          />
+          <input type="text" name="url" tabindex="-1" autocomplete="off" />
         </div>
 
         <div class="form-field hcaptcha-field">
@@ -68,22 +39,35 @@ const csrfSecret = import.meta.env.PUBLIC_CSRF_SECRET || 'bkmedia_csrf_2026';
   </div>
 </section>
 
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<script>
+  // Load the hCaptcha script lazily — only when the form approaches the
+  // viewport (or gets focused) — so the third-party JS does not slow down
+  // initial page load.
+  let hcaptchaLoaded = false;
+  const loadHcaptcha = () => {
+    if (hcaptchaLoaded) return;
+    hcaptchaLoaded = true;
+    const script = document.createElement('script');
+    script.src = 'https://js.hcaptcha.com/1/api.js';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  };
 
-<script define:vars={{ csrfSecret }}>
-  // Generate time-based HMAC CSRF token using Web Crypto API
-  async function generateCsrfToken() {
-    const window_ = Math.floor(Date.now() / 3600000);
-    const encoder = new TextEncoder();
-    const key = await crypto.subtle.importKey(
-      'raw', encoder.encode(csrfSecret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  const form = document.querySelector('.contact-form');
+  if (form) {
+    form.addEventListener('focusin', loadHcaptcha, { once: true });
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          loadHcaptcha();
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '300px' },
     );
-    const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(String(window_)));
-    const hash = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
-    const field = document.getElementById('csrf_token');
-    if (field) field.value = hash;
+    observer.observe(form);
   }
-  generateCsrfToken();
 </script>
 
 <style>
@@ -113,7 +97,9 @@ const csrfSecret = import.meta.env.PUBLIC_CSRF_SECRET || 'bkmedia_csrf_2026';
     font-size: var(--text-base);
     color: var(--color-text);
     background-color: var(--color-white);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
   }
 
   .form-field input:focus,
@@ -151,7 +137,9 @@ const csrfSecret = import.meta.env.PUBLIC_CSRF_SECRET || 'bkmedia_csrf_2026';
     font-size: var(--text-base);
     font-weight: var(--weight-bold);
     cursor: pointer;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
   }
 
   .btn-submit:hover {

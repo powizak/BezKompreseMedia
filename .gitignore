@@ -20,6 +20,9 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 
+# Local agent/tool state
+.omo/
+
 # Editor / IDE
 .vscode/
 .idea/

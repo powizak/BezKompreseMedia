@@ -7,11 +7,7 @@ import { teamHero, teamIntro, teamMembers } from '../data/team';
 ---
 
 <BaseLayout title="Náš tým - BezKomprese Media">
-  <ServiceHero
-    title={teamHero.title}
-    subtitle={teamHero.subtitle}
-    intro={teamHero.intro}
-  />
+  <ServiceHero title={teamHero.title} subtitle={teamHero.subtitle} intro={teamHero.intro} />
 
   <section class="section team-section">
     <div class="container">
@@ -30,17 +26,22 @@ import { teamHero, teamIntro, teamMembers } from '../data/team';
             socials={teamMembers[0].socials}
           />
         </div>
-        {teamMembers.slice(1).map((member, i) => (
-          <div class={`team-grid__item team-grid__item--member scroll-reveal`} data-delay={String((i + 1) * 100)}>
-            <TeamCard
-              name={member.name}
-              role={member.role}
-              bio={member.bio}
-              photoSrc={member.photo}
-              socials={member.socials}
-            />
-          </div>
-        ))}
+        {
+          teamMembers.slice(1).map((member, i) => (
+            <div
+              class={`team-grid__item team-grid__item--member scroll-reveal`}
+              data-delay={String((i + 1) * 100)}
+            >
+              <TeamCard
+                name={member.name}
+                role={member.role}
+                bio={member.bio}
+                photoSrc={member.photo}
+                socials={member.socials}
+              />
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>

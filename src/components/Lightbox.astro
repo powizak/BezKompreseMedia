@@ -1,0 +1,69 @@
+---
+// Lightbox.astro — GLightbox init + styles.
+// Include ONLY on pages that render .glightbox links (foto, galerie),
+// so the library is not shipped to every page.
+import 'glightbox/dist/css/glightbox.css';
+---
+
+<script>
+  import GLightbox from 'glightbox';
+  const lightbox = GLightbox({
+    selector: '.glightbox',
+    touchNavigation: true,
+    loop: true,
+    zoomable: true,
+  });
+  window.GLightboxInstance = lightbox;
+</script>
+
+<style is:global>
+  /* GLightbox overrides */
+  .goverlay {
+    background: rgba(0, 0, 0, 0.92) !important;
+  }
+
+  .gclose,
+  .gprev,
+  .gnext {
+    color: rgba(255, 255, 255, 0.9) !important;
+    transition: color 150ms ease !important;
+  }
+
+  .gclose:hover,
+  .gprev:hover,
+  .gnext:hover {
+    color: var(--color-brand) !important;
+  }
+
+  .gclose svg,
+  .gprev svg,
+  .gnext svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .gcounter {
+    color: rgba(255, 255, 255, 0.8);
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+
+  .gslide-image img {
+    max-height: 90vh;
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    .gclose svg,
+    .gprev svg,
+    .gnext svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .gprev,
+    .gnext {
+      padding: 8px;
+    }
+  }
+</style>

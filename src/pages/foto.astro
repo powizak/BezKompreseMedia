@@ -2,19 +2,18 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceHero from '../components/ServiceHero.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
+import GalleryGrid from '../components/GalleryGrid.astro';
+import Lightbox from '../components/Lightbox.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { fotoHero, fotoCategories, fotoGalleries, fotoGalleryNote } from '../data/foto';
 
-const categoryGridHeading = "Kategorie služeb";
-const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány na profesionální úrovni a nemusíte se bát jakoukoliv z nich využít. Pokud nenajdete kategorii, kterou hledáte, i tak se neváhejte ozvat.";
+const categoryGridHeading = 'Kategorie služeb';
+const categoryGridIntro =
+  'Veškeré naše jednotlivé služby jsou poskytovány na profesionální úrovni a nemusíte se bát jakoukoliv z nich využít. Pokud nenajdete kategorii, kterou hledáte, i tak se neváhejte ozvat.';
 ---
 
 <BaseLayout title="Foto - BezKomprese Media">
-  <ServiceHero
-    title={fotoHero.title}
-    subtitle={fotoHero.subtitle}
-    intro={fotoHero.intro}
-  />
+  <ServiceHero title={fotoHero.title} subtitle={fotoHero.subtitle} intro={fotoHero.intro} />
 
   <CategoryGrid
     heading={categoryGridHeading}
@@ -25,39 +24,43 @@ const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány
   <!-- Gallery note -->
   <section class="section">
     <div class="container">
-      <p class="gallery-note scroll-reveal" set:html={fotoGalleryNote.replace('ZDE', '<a href="/galerie/">ZDE</a>')} />
+      <p
+        class="gallery-note scroll-reveal"
+        set:html={fotoGalleryNote.replace('ZDE', '<a href="/galerie/">ZDE</a>')}
+      />
     </div>
   </section>
 
   <!-- Gallery sections -->
   <section class="section gallery-sections">
     <div class="container">
-      {fotoGalleries.map((gallery, i) => (
-        <div class="gallery-section scroll-reveal" data-delay={i * 100} id={gallery.id}>
-          <div class="gallery-section-header">
-            <h2 class="gallery-section-title">{gallery.title}</h2>
-            <p class="gallery-section-desc">{gallery.description}</p>
-          </div>
-          {gallery.photos.length > 0 ? (
-            <div class="gallery-grid">
-              {gallery.photos.map((photo) => (
-                <a href={photo.src} class="glightbox gallery-photo" data-gallery={gallery.title}>
-                  <img
-                    src={photo.src.replace('.jpg', '_600.webp')}
-                    alt={photo.alt}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </a>
-              ))}
+      {
+        fotoGalleries.map((gallery, i) => (
+          <div class="gallery-section scroll-reveal" data-delay={i * 100} id={gallery.id}>
+            <div class="gallery-section-header">
+              <h2 class="gallery-section-title">{gallery.title}</h2>
+              <p class="gallery-section-desc">{gallery.description}</p>
             </div>
-          ) : null}
-        </div>
-      ))}
+            {gallery.photos.length > 0 && (
+              <GalleryGrid
+                photos={gallery.photos.map((p) => ({
+                  thumb: p.src.replace('.jpg', '_600.webp'),
+                  full: p.src,
+                  alt: p.alt,
+                }))}
+                label={gallery.title}
+                colsMobile={1}
+                colsDesktop={2}
+              />
+            )}
+          </div>
+        ))
+      }
     </div>
   </section>
 
   <PageCTA />
+  <Lightbox />
 </BaseLayout>
 
 <style>
@@ -119,34 +122,6 @@ const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány
     max-width: 600px;
   }
 
-  /* === Gallery Grid: mobile-first === */
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-
-  .gallery-photo {
-    display: block;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    background: var(--color-bg-alt);
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .gallery-photo img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform var(--transition-base);
-  }
-
-  .gallery-photo:hover img {
-    transform: scale(1.02);
-  }
-
-  /* === Desktop: 2-col grid === */
   @media (min-width: 769px) {
     .gallery-section-title {
       font-size: var(--text-3xl);
@@ -155,11 +130,6 @@ const categoryGridIntro = "Veškeré naše jednotlivé služby jsou poskytovány
     .gallery-section-desc {
       max-width: 700px;
       font-size: var(--text-lg);
-    }
-
-    .gallery-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-5);
     }
   }
 </style>

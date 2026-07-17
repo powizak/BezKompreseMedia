@@ -9,41 +9,40 @@ import { cenikHero, cenikSections } from '../data/cenik';
   title="Ceník - BezKomprese Media"
   description="Ceník jednotlivých služeb, které si u nás můžete objednat. Od fotografií, přes video či webové stránky až po vytváření fyzických produktů právě pro Vás."
 >
-  <ServiceHero
-    title={cenikHero.title}
-    subtitle={cenikHero.subtitle}
-    intro={cenikHero.intro}
-  />
+  <ServiceHero title={cenikHero.title} subtitle={cenikHero.subtitle} intro={cenikHero.intro} />
 
-  {cenikSections.map((section, i) => (
-    <section class="section pricing-section" id={section.id}>
-      <div class="container">
-        <header class="pricing-header scroll-reveal">
-          <h2 class="pricing-heading">{section.title}</h2>
-          <p class="pricing-intro">{section.description}</p>
-        </header>
+  {
+    cenikSections.map((section, i) => (
+      <section class="section pricing-section" id={section.id}>
+        <div class="container">
+          <header class="pricing-header scroll-reveal">
+            <h2 class="pricing-heading">{section.title}</h2>
+            <p class="pricing-intro">{section.description}</p>
+          </header>
 
-        <div class={`pricing-grid pricing-grid--${section.columns} scroll-reveal`} data-delay={i * 50}>
-          {section.cards.map((card) => (
-            <article class="pricing-card">
-              <h3 class="pricing-card__title">{card.title}</h3>
-              <p class="pricing-card__price">{card.price}</p>
-              {card.description && (
-                <p class="pricing-card__desc">{card.description}</p>
-              )}
-              {card.detail && (
-                <p class="pricing-card__detail">{card.detail}</p>
-              )}
-            </article>
-          ))}
+          <div
+            class={`pricing-grid pricing-grid--${section.columns} scroll-reveal`}
+            data-delay={i * 50}
+          >
+            {section.cards.map((card) => (
+              <article class="pricing-card">
+                <h3 class="pricing-card__title">{card.title}</h3>
+                <p class="pricing-card__price">{card.price}</p>
+                {card.description && <p class="pricing-card__desc">{card.description}</p>}
+                {card.detail && <p class="pricing-card__detail">{card.detail}</p>}
+              </article>
+            ))}
+          </div>
+
+          {section.note && (
+            <p class="pricing-note scroll-reveal" data-delay={i * 50 + 50}>
+              {section.note}
+            </p>
+          )}
         </div>
-
-        {section.note && (
-          <p class="pricing-note scroll-reveal" data-delay={i * 50 + 50}>{section.note}</p>
-        )}
-      </div>
-    </section>
-  ))}
+      </section>
+    ))
+  }
 
   <PageCTA showPriceLink={false} />
 </BaseLayout>

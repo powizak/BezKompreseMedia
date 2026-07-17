@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
     "@img/sharp-win32-x64": "^0.34.5",
     "@rollup/rollup-win32-x64-msvc": "^4.60.1",
     "astro": "^6.1.5",
@@ -22,6 +24,7 @@
     "sharp": "^0.34.5"
   },
   "optionalDependencies": {
+    "@img/sharp-linux-x64": "^0.34.5",
     "@rollup/rollup-linux-x64-gnu": "^4.60.1"
   },
   "devDependencies": {

@@ -3,23 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceHero from '../components/ServiceHero.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
 import PageCTA from '../components/PageCTA.astro';
-import {
-  videoHero,
-  videoCategories,
-  videoGalleries,
-  videoGalleryNote,
-} from '../data/video';
+import { videoHero, videoCategories, videoGalleries, videoGalleryNote } from '../data/video';
 
 // Parse gallery note to make "ZDE" a link to /galerie/
 const noteParts = videoGalleryNote.split('ZDE');
 ---
 
 <BaseLayout title="Video - BezKomprese Media">
-  <ServiceHero
-    title={videoHero.title}
-    subtitle={videoHero.subtitle}
-    intro={videoHero.intro}
-  />
+  <ServiceHero title={videoHero.title} subtitle={videoHero.subtitle} intro={videoHero.intro} />
 
   <CategoryGrid
     heading="Kategorie služeb"
@@ -39,34 +30,36 @@ const noteParts = videoGalleryNote.split('ZDE');
   </section>
 
   <!-- Gallery sections -->
-  {videoGalleries.map((gallery, gi) => (
-    <section class="section gallery-section-wrapper" id={gallery.id}>
-      <div class="container">
-        <div class="gallery-section scroll-reveal" data-delay={gi * 100}>
-          <div class="gallery-section-header">
-            <h2 class="gallery-section__title">{gallery.title}</h2>
-            <p class="gallery-section__desc">{gallery.description}</p>
-          </div>
-          <div class="gallery-grid">
-            {gallery.videos.map((video, vi) => (
-              <div class="gallery-video">
-                <div class="video-responsive">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${video.youtubeId}`}
-                    title={`${gallery.title} – ukázka ${vi + 1}`}
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                    loading="lazy"
-                  />
+  {
+    videoGalleries.map((gallery, gi) => (
+      <section class="section gallery-section-wrapper" id={gallery.id}>
+        <div class="container">
+          <div class="gallery-section scroll-reveal" data-delay={gi * 100}>
+            <div class="gallery-section-header">
+              <h2 class="gallery-section__title">{gallery.title}</h2>
+              <p class="gallery-section__desc">{gallery.description}</p>
+            </div>
+            <div class="gallery-grid">
+              {gallery.videos.map((video, vi) => (
+                <div class="gallery-video">
+                  <div class="video-responsive">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${video.youtubeId}`}
+                      title={`${gallery.title} – ukázka ${vi + 1}`}
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowfullscreen
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  ))}
+      </section>
+    ))
+  }
 
   <PageCTA />
 </BaseLayout>

@@ -11,13 +11,9 @@ import {
   webPortfolio,
 } from '../data/web';
 ---
-<BaseLayout title="Web - BezKomprese Media">
 
-  <ServiceHero
-    title={webHero.title}
-    subtitle={webHero.subtitle}
-    intro={webHero.intro}
-  />
+<BaseLayout title="Web - BezKomprese Media">
+  <ServiceHero title={webHero.title} subtitle={webHero.subtitle} intro={webHero.intro} />
 
   <CategoryGrid
     heading="Kategorie služeb"
@@ -34,18 +30,20 @@ import {
       </header>
 
       <div class="process-steps">
-        {webProcessSteps.map((step, i) => (
-          <div
-            class={`process-step scroll-reveal ${i % 2 === 0 ? 'process-step--left' : 'process-step--right'}`}
-            data-delay={i * 100}
-          >
-            <span class="step-number">{step.number}</span>
-            <div class="step-content">
-              <h3 class="step-title">{step.title}</h3>
-              <p class="step-desc">{step.description}</p>
+        {
+          webProcessSteps.map((step, i) => (
+            <div
+              class={`process-step scroll-reveal ${i % 2 === 0 ? 'process-step--left' : 'process-step--right'}`}
+              data-delay={i * 100}
+            >
+              <span class="step-number">{step.number}</span>
+              <div class="step-content">
+                <h3 class="step-title">{step.title}</h3>
+                <p class="step-desc">{step.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </section>
@@ -56,38 +54,39 @@ import {
       <h2 class="portfolio-heading scroll-reveal">A jak to pak může vypadat?</h2>
 
       <div class="portfolio-grid">
-        {webPortfolio.map((item, i) => (
-          <article
-            class={`portfolio-card scroll-reveal ${i % 2 === 0 ? 'portfolio-card--wide' : 'portfolio-card--narrow'}`}
-            data-delay={i * 150}
-          >
-            <div class="portfolio-thumbnail">
-              <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
-            </div>
-            <div class="portfolio-body">
-              <h3 class="portfolio-title">{item.title}</h3>
-              <div class="portfolio-tags">
-                {item.tags.map((tag) => (
-                  <span class="tag">{tag}</span>
-                ))}
+        {
+          webPortfolio.map((item, i) => (
+            <article
+              class={`portfolio-card scroll-reveal ${i % 2 === 0 ? 'portfolio-card--wide' : 'portfolio-card--narrow'}`}
+              data-delay={i * 150}
+            >
+              <div class="portfolio-thumbnail">
+                <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
               </div>
-              <a
-                class="portfolio-link"
-                href={`https://${item.url}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.urlText}
-              </a>
-            </div>
-          </article>
-        ))}
+              <div class="portfolio-body">
+                <h3 class="portfolio-title">{item.title}</h3>
+                <div class="portfolio-tags">
+                  {item.tags.map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+                <a
+                  class="portfolio-link"
+                  href={`https://${item.url}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.urlText}
+                </a>
+              </div>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
 
   <PageCTA />
-
 </BaseLayout>
 
 <style>
@@ -191,10 +190,18 @@ import {
     }
 
     /* Stagger vertical offsets for rhythm */
-    .process-step:nth-child(1) { margin-top: 0; }
-    .process-step:nth-child(2) { margin-top: var(--space-10); }
-    .process-step:nth-child(3) { margin-top: calc(-1 * var(--space-4)); }
-    .process-step:nth-child(4) { margin-top: var(--space-8); }
+    .process-step:nth-child(1) {
+      margin-top: 0;
+    }
+    .process-step:nth-child(2) {
+      margin-top: var(--space-10);
+    }
+    .process-step:nth-child(3) {
+      margin-top: calc(-1 * var(--space-4));
+    }
+    .process-step:nth-child(4) {
+      margin-top: var(--space-8);
+    }
 
     .step-number {
       width: 56px;

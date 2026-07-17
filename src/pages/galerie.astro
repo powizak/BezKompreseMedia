@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceHero from '../components/ServiceHero.astro';
+import GalleryGrid from '../components/GalleryGrid.astro';
+import Lightbox from '../components/Lightbox.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { galerieHero, galerieItems, galerieNote } from '../data/galerie';
 ---
+
 <BaseLayout title="Galerie - BezKomprese Media">
   <ServiceHero
     title={galerieHero.title}
@@ -13,68 +16,28 @@ import { galerieHero, galerieItems, galerieNote } from '../data/galerie';
 
   <section class="section">
     <div class="container">
-      {galerieItems.map((item, index) => {
-        const initialCount = item.initialCount || 8;
-        const hasMore = item.photos.length > initialCount;
-        return (
+      {
+        galerieItems.map((item) => (
           <div class="gallery-item scroll-reveal">
             <h2 class="gallery-item__title">{item.title}</h2>
             <p class="gallery-item__desc">{item.description}</p>
-            <div class="gallery-item__grid">
-              {item.photos.slice(0, initialCount).map((photo) => (
-                <a href={photo.full} class="glightbox gallery-photo" data-gallery={item.title}>
-                  <img src={photo.thumbnail} alt={photo.alt} loading="lazy" decoding="async" />
-                </a>
-              ))}
-            </div>
-            {hasMore && (
-              <div class="gallery-item__hidden" id={`gallery-hidden-${index}`}>
-                {item.photos.slice(initialCount).map((photo) => (
-                  <a href={photo.full} class="glightbox gallery-photo" data-gallery={item.title}>
-                    <img src={photo.thumbnail} alt={photo.alt} loading="lazy" decoding="async" />
-                  </a>
-                ))}
-              </div>
-            )}
-            {hasMore && (
-              <button class="gallery-show-more" data-gallery-id={index}>
-                Zobrazit více ({item.photos.length - initialCount} fotek)
-              </button>
-            )}
+            <GalleryGrid
+              photos={item.photos.map((p) => ({ thumb: p.thumbnail, full: p.full, alt: p.alt }))}
+              label={item.title}
+              initialCount={item.initialCount ?? 8}
+            />
           </div>
-        );
-      })}
+        ))
+      }
       <p class="gallery-note scroll-reveal">{galerieNote}</p>
     </div>
   </section>
 
   <PageCTA />
+  <Lightbox />
 </BaseLayout>
 
-<script>
-  document.querySelectorAll('.gallery-show-more').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const hiddenId = btn.getAttribute('data-gallery-id');
-      const hiddenDiv = document.getElementById(`gallery-hidden-${hiddenId}`);
-      if (hiddenDiv) {
-        const grid = btn.closest('.gallery-item').querySelector('.gallery-item__grid');
-        if (grid) {
-          hiddenDiv.querySelectorAll('.gallery-photo').forEach(photo => {
-            grid.appendChild(photo);
-          });
-        }
-        hiddenDiv.remove();
-        btn.remove();
-        if (window.GLightboxInstance) {
-          window.GLightboxInstance.reload();
-        }
-      }
-    });
-  });
-</script>
-
 <style>
-  /* ── Gallery Item ───────────────────────────────── */
   .gallery-item {
     width: 100%;
     margin-bottom: var(--space-20);
@@ -98,59 +61,6 @@ import { galerieHero, galerieItems, galerieNote } from '../data/galerie';
     margin-bottom: var(--space-8);
   }
 
-  /* ── Gallery Grid ────────────────────────────────── */
-  .gallery-item__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
-  }
-
-  /* ── Gallery Photo ───────────────────────────────── */
-  .gallery-photo {
-    display: block;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    background: var(--color-bg-alt);
-  }
-
-  .gallery-photo img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform var(--transition-base);
-  }
-
-  .gallery-photo:hover img {
-    transform: scale(1.02);
-  }
-
-  /* ── Hidden photos (before "show more" click) ──── */
-  .gallery-item__hidden {
-    display: none;
-  }
-
-  /* ── Show More Button ───────────────────────────── */
-  .gallery-show-more {
-    display: block;
-    margin: var(--space-8) auto 0;
-    padding: var(--space-3) var(--space-8);
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-bold);
-    color: var(--color-black);
-    background-color: var(--color-brand);
-    border: none;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
-  }
-
-  .gallery-show-more:hover {
-    background-color: var(--color-brand-dark);
-    transform: translateY(-1px);
-  }
-
-  /* ── Gallery Note ────────────────────────────────── */
   .gallery-note {
     font-family: var(--font-body);
     font-size: var(--text-base);
@@ -159,13 +69,7 @@ import { galerieHero, galerieItems, galerieNote } from '../data/galerie';
     text-align: center;
   }
 
-  /* Desktop: 4-column grid */
   @media (min-width: 769px) {
-    .gallery-item__grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--space-6);
-    }
-
     .gallery-item__title {
       font-size: var(--text-3xl);
     }

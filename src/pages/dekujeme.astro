@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Děkujeme - BezKomprese Media" noindex>
+  <section class="section container">
+    <div class="thank-you">
+      <h1>Děkujeme za Vaši poptávku!</h1>
+      <p>Ozveme se Vám co nejdříve.</p>
+      <a href="/" class="thank-you__link">Zpět na úvodní stránku</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .thank-you {
+    text-align: center;
+    padding: var(--space-16) var(--space-8);
+    background-color: var(--color-brand-subtle);
+    border-radius: var(--radius-lg);
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .thank-you h1 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .thank-you p {
+    margin-bottom: var(--space-8);
+  }
+
+  .thank-you__link {
+    display: inline-block;
+    padding: var(--space-3) var(--space-8);
+    font-weight: var(--weight-bold);
+    color: var(--color-black);
+    background-color: var(--color-brand);
+    border-radius: var(--radius-full);
+    transition: background-color var(--transition-fast);
+  }
+
+  .thank-you__link:hover {
+    background-color: var(--color-brand-dark);
+  }
+</style>

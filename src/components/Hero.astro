@@ -12,7 +12,8 @@ import heroSrc from '../assets/hero.webp';
         Digitální kreativita<br />Bez Kompromisů
       </h1>
       <p class="hero__subtitle">
-        Naše vášeň spočívá ve vytváření vizuálních, digitálních a kreativních prvků, které posouvají Vaše podnikání kupředu.
+        Naše vášeň spočívá ve vytváření vizuálních, digitálních a kreativních prvků, které posouvají
+        Vaše podnikání kupředu.
       </p>
       <a href="/contact/#form" class="hero__cta">Zaslat poptávku</a>
     </div>
@@ -22,7 +23,10 @@ import heroSrc from '../assets/hero.webp';
         <Image
           src={heroSrc}
           alt="BezKomprese Media — kreativní digitální tvorba"
-          width={860}
+          widths={[480, 768, 860]}
+          sizes="(min-width: 769px) 42vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
           class="hero__image"
         />
       </div>
@@ -40,11 +44,7 @@ import heroSrc from '../assets/hero.webp';
     min-height: 85vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(
-      160deg,
-      var(--color-white) 0%,
-      var(--color-bg-alt) 100%
-    );
+    background: linear-gradient(160deg, var(--color-white) 0%, var(--color-bg-alt) 100%);
     overflow: hidden;
     padding-block: var(--space-12);
   }

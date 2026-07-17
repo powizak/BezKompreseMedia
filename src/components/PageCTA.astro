@@ -1,16 +1,13 @@
 ---
-// PageCTA.astro - Shared CTA block for sub-pages
-// Props: showPriceLink (boolean, default: true), phoneText (string, default: "+420 731 466 375 (Robin)")
+// PageCTA.astro - Shared CTA block used on all pages
+import { siteContact } from '../data/contact';
 
 interface Props {
   showPriceLink?: boolean;
   phoneText?: string;
 }
 
-const {
-  showPriceLink = true,
-  phoneText = "+420 731 466 375 (Robin)"
-} = Astro.props;
+const { showPriceLink = true, phoneText = siteContact.phoneLabel } = Astro.props;
 ---
 
 <section class="page-cta">
@@ -18,15 +15,19 @@ const {
     <!-- Price inquiry block -->
     <div class="page-cta-block page-cta-price">
       <h2 class="page-cta-heading">Zajímá Vás cena našich služeb?</h2>
-      {showPriceLink && (
-        <a href="/cenik/" class="page-cta-link">Prohlédněte si ceník</a>
-      )}
+      {
+        showPriceLink && (
+          <a href="/cenik/" class="page-cta-link">
+            Prohlédněte si ceník
+          </a>
+        )
+      }
     </div>
 
     <!-- Contact block -->
     <div class="page-cta-block page-cta-contact">
       <p class="page-cta-text">A nebo nás neváhejte rovnou kontaktovat 😉</p>
-      <a href="tel:+420731466375" class="page-cta-phone">{phoneText}</a>
+      <a href={siteContact.phoneHref} class="page-cta-phone">{phoneText}</a>
       <a href="/contact/#form" class="page-cta-button">Zaslat poptávku</a>
     </div>
   </div>
@@ -114,7 +115,9 @@ const {
     color: var(--color-brand);
     text-decoration: none;
     border-radius: var(--radius-md);
-    transition: transform var(--transition-fast), box-shadow var(--transition-base);
+    transition:
+      transform var(--transition-fast),
+      box-shadow var(--transition-base);
     white-space: nowrap;
     width: 100%;
     max-width: 300px;

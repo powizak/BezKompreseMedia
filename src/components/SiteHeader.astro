@@ -23,23 +23,20 @@ const { navItems } = Astro.props;
 
     <nav class="nav-desktop" aria-label="Hlavní navigace">
       <ul class="nav-list">
-        {navItems.map((item) => (
-          <li>
-            <a href={item.href} class="nav-link">
-              {item.label}
-            </a>
-          </li>
-        ))}
+        {
+          navItems.map((item) => (
+            <li>
+              <a href={item.href} class="nav-link">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
       <a href="/contact/" class="cta-button">Kontakt</a>
     </nav>
 
-    <button
-      class="hamburger"
-      type="button"
-      aria-label="Otevřít menu"
-      aria-expanded="false"
-    >
+    <button class="hamburger" type="button" aria-label="Otevřít menu" aria-expanded="false">
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
@@ -48,13 +45,15 @@ const { navItems } = Astro.props;
 
   <nav class="nav-mobile" aria-label="Mobilní navigace">
     <ul class="nav-mobile-list">
-      {navItems.map((item) => (
-        <li>
-          <a href={item.href} class="nav-mobile-link">
-            {item.label}
-          </a>
-        </li>
-      ))}
+      {
+        navItems.map((item) => (
+          <li>
+            <a href={item.href} class="nav-mobile-link">
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
       <li>
         <a href="/contact/" class="cta-button">Kontakt</a>
       </li>
@@ -114,7 +113,9 @@ const { navItems } = Astro.props;
     font-weight: var(--weight-regular);
     color: var(--color-text);
     border-radius: var(--radius-sm);
-    transition: color var(--transition-fast), background-color var(--transition-fast);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast);
   }
 
   .nav-link:hover {
@@ -134,7 +135,9 @@ const { navItems } = Astro.props;
     border: none;
     cursor: pointer;
     text-align: center;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
   }
 
   .cta-button:hover {
@@ -162,7 +165,9 @@ const { navItems } = Astro.props;
     height: 2px;
     background-color: var(--color-black);
     border-radius: 2px;
-    transition: transform var(--transition-fast), opacity var(--transition-fast);
+    transition:
+      transform var(--transition-fast),
+      opacity var(--transition-fast);
   }
 
   .hamburger.active .hamburger-line:nth-child(1) {
@@ -209,7 +214,9 @@ const { navItems } = Astro.props;
     font-size: var(--text-base);
     color: var(--color-text);
     border-radius: var(--radius-sm);
-    transition: color var(--transition-fast), background-color var(--transition-fast);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast);
   }
 
   .nav-mobile-link:hover {
