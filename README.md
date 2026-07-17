@@ -1,5 +1,7 @@
 # BezKomprese Media — Web
 
+[![Build & Deploy](https://github.com/powizak/BezKompreseMedia/actions/workflows/deploy.yml/badge.svg)](https://github.com/powizak/BezKompreseMedia/actions/workflows/deploy.yml)
+
 Statický web pro [bezkompresemedia.cz](https://bezkompresemedia.cz) postavený na [Astro](https://astro.build).
 
 ## Přehled
