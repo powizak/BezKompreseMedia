@@ -5,7 +5,8 @@
 $config = file_exists(__DIR__ . '/config.php') ? include __DIR__ . '/config.php' : [];
 $hcaptcha_secret = $config['hcaptcha_secret'] ?? getenv('HCAPTCHA_SECRET_KEY');
 $recipient = $config['contact_recipient'] ?? 'info@bezkompresemedia.cz';
-$subject = 'Nová poptávka z bezkompresemedia.cz';
+// Keep the domain out of the subject (spam heuristics flag URLs in subjects).
+$subject = 'Nová poptávka z webového formuláře';
 
 // Start session for rate limiting
 session_start();
@@ -116,23 +117,30 @@ if (empty($verify_json['success'])) {
     exit;
 }
 
-// Anti-header-injection
+// Headers. The From address MUST be our own domain so the message aligns
+// with SPF/DKIM/DMARC for bezkompresemedia.cz. Putting the visitor's address
+// in From (as before) makes Gmail check gmail.com's DMARC policy against a
+// WEDOS server → hard fail → spam. The visitor's address goes in Reply-To so
+// "Reply" still reaches them. RFC 2047 encode any header with non-ASCII text.
+$encode_header = static fn(string $text): string => '=?UTF-8?B?' . base64_encode($text) . '?=';
+
 $headers = [];
-$headers[] = 'From: ' . $jmeno . ' <' . $email . '>';
+$headers[] = 'From: BezKomprese Media <' . $recipient . '>';
 $headers[] = 'Reply-To: ' . $email;
+$headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-Type: text/plain; charset=UTF-8';
-$headers[] = 'X-Mailer: PHP/' . phpversion();
+$headers[] = 'Content-Transfer-Encoding: 8bit';
 
 // Build email body
-$body = "Nová poptávka z bezkompresemedia.cz\n";
+$body = "Nová poptávka z webu bezkompresemedia.cz\n";
 $body .= "================================\n\n";
 $body .= "Jméno: " . $jmeno . "\n";
 $body .= "Email: " . $email . "\n";
 $body .= "Telefon: " . ($telefon ?: 'neuvedeno') . "\n\n";
 $body .= "Poptávka:\n" . $poptavka . "\n";
 
-// Send email
-$mail_sent = mail($recipient, $subject, $body, implode("\r\n", $headers));
+// Send email (subject RFC 2047 encoded because it contains Czech characters)
+$mail_sent = mail($recipient, $encode_header($subject), $body, implode("\r\n", $headers));
 
 if (!$mail_sent) {
     http_response_code(500);
