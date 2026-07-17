@@ -107,9 +107,23 @@ V repozitáři: **Settings → Secrets and variables → Actions → New reposit
 | `FTP_USER` | FTP uživatel |
 | `FTP_PASSWORD` | FTP heslo |
 
-Workflow nahrává do adresáře `www/` (standardní document root WEDOSu). Pokud má webspace jinou strukturu, upravte `server-dir` v `deploy.yml`.
+FTP účet vede přímo do document rootu, proto workflow nahrává do `./` (`server-dir` v `deploy.yml`). Pozor: dřívější hodnota `www/` vytvořila na serveru vnořenou složku `/www/` — pokud změníte hosting, ověřte, kam FTP účet skutečně směřuje.
 
 Poznámka: WEDOS nepodporuje SSH/rsync ani nastavení proměnných prostředí, proto FTP + generovaný `config.php`.
+
+### E-mail — doručitelnost formuláře (DNS)
+
+Kontaktní formulář odesílá e-maily přes PHP `mail()` ze serveru WEDOS. Aby nepadaly do spamu, musí mít doména `bezkompresemedia.cz` nastavené autentizační DNS záznamy (WEDOS admin → DNS):
+
+| Typ | Název | Hodnota |
+|---|---|---|
+| TXT (SPF) | `@` (kořen domény) | `v=spf1 include:_spf.wedos.net ~all` |
+| TXT (DMARC) | `_dmarc` | `v=DMARC1; p=none; rua=mailto:info@bezkompresemedia.cz` |
+| DKIM | — | zapnout v administraci WEDOSu (WEDOS klíč sám vygeneruje a zveřejní) |
+
+DKIM je nejdůležitější — přežije i přeposílání (`info@` je forward na Gmail). DMARC začněte na `p=none` (monitoring), po ověření lze zpřísnit na `p=quarantine`. Ověření: pošlete testovací poptávku a v hlavičce hledejte `spf=pass` a `dkim=pass`, nebo použijte [mail-tester.com](https://www.mail-tester.com/).
+
+**Kód (`public/contact-handler.php`) je záměrně nastaven tak, že `From:` je vždy doména** (`info@bezkompresemedia.cz`), nikdy adresa návštěvníka — jinak Gmail kontroluje DMARC cizí domény (gmail.com) a e-mail tvrdě propadne. Adresa návštěvníka je v `Reply-To`.
 
 ### Po nasazení — kontrolní seznam
 
