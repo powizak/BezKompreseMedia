@@ -75,6 +75,21 @@ export const webProcessSteps: ProcessStep[] = [
 
 export const webPortfolio: PortfolioItem[] = [
   {
+    title: 'Střelnice Sklep - Domažlice',
+    tags: [
+      'Vícejazyčný web (CS/EN/DE)',
+      'SEO & GEO optimalizace',
+      'Optimalizace pro AI vyhledávače',
+      'Rezervační systém Booqito',
+      'Snadná správa obsahu přes Markdown',
+      'Responzivní web',
+      'Extrémně rychlý web',
+    ],
+    url: 'www.strelnicesklep.cz',
+    urlText: 'www.strelnicesklep.cz',
+    image: '/images/webReferences/strelnicesklep.webp',
+  },
+  {
     title: 'Apartmány nad Rybníkem - Železná Ruda',
     tags: [
       'Vícejazyčná verze webu',
