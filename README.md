@@ -117,11 +117,10 @@ Kontaktní formulář odesílá e-maily přes PHP `mail()` ze serveru WEDOS. Aby
 
 | Typ | Název | Hodnota |
 |---|---|---|
-| TXT (SPF) | `@` (kořen domény) | `v=spf1 include:_spf.wedos.net ~all` |
+| TXT (SPF) | `@` (kořen domény) | `v=spf1 mx a include:_spf.we.wedos.net -all` |
 | TXT (DMARC) | `_dmarc` | `v=DMARC1; p=none; rua=mailto:info@bezkompresemedia.cz` |
-| DKIM | — | zapnout v administraci WEDOSu (WEDOS klíč sám vygeneruje a zveřejní) |
 
-DKIM je nejdůležitější — přežije i přeposílání (`info@` je forward na Gmail). DMARC začněte na `p=none` (monitoring), po ověření lze zpřísnit na `p=quarantine`. Ověření: pošlete testovací poptávku a v hlavičce hledejte `spf=pass` a `dkim=pass`, nebo použijte [mail-tester.com](https://www.mail-tester.com/).
+DMARC je aktivní (`p=none` = monitoring, po čase ověření lze zpřísnit na `p=quarantine`). **DKIM se u PHP `mail()` na sdíleném WEDOS hostingu nedá zarovnat s vlastní doménou** — WEDOS podepisuje sdíleným klíčem `shared.dkim-wes1.wedos.net`, takže `dkim=fail` v DMARC reportech je u tohoto způsobu odesílání očekávané a neřešitelné bez přechodu na SMTP. DMARC ale projde, pokud uspěje **alespoň jeden** z SPF/DKIM se shodou domény — proto je zásadní mít správně nastavené SPF (pozor na přesný název `_spf.we.wedos.net`, ne `_spf.wedos.net`). Ověření: pošlete testovací poptávku a v hlavičce hledejte `spf=pass`, nebo použijte [mail-tester.com](https://www.mail-tester.com/).
 
 **Kód (`public/contact-handler.php`) je záměrně nastaven tak, že `From:` je vždy doména** (`info@bezkompresemedia.cz`), nikdy adresa návštěvníka — jinak Gmail kontroluje DMARC cizí domény (gmail.com) a e-mail tvrdě propadne. Adresa návštěvníka je v `Reply-To`.
 
