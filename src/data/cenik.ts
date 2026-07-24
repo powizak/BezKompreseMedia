@@ -31,21 +31,21 @@ export const cenikSections: PricingSection[] = [
     cards: [
       {
         title: 'Základní balíček',
-        price: '9 000 Kč',
+        price: 'od 9 000 Kč',
         description:
           'Zachycení svatebního obřadu, společné záběry s hosty a párové zachycení novomanželů',
         detail: 'Maximální délka 3 hodiny',
       },
       {
         title: 'Standardní balíček',
-        price: '18 500 Kč',
+        price: 'od 18 500 Kč',
         description:
           'Zachycení příprav, svatebního obřadu, společné záběry s hosty, hostiny, prvního tance a párové zachycení novomanželů',
         detail: 'Maximální délka 7 hodin',
       },
       {
         title: 'Plnotučný balíček',
-        price: '32 000 Kč',
+        price: 'od 32 000 Kč',
         description:
           'Fotografie a videoklip z příprav, svatebního obřadu, společné záběry s hosty, hostiny, prvního tance a párové zachycení novomanželů',
         detail: 'Maximální délka 10 hodin',
@@ -62,13 +62,13 @@ export const cenikSections: PricingSection[] = [
     cards: [
       {
         title: 'Portrétní či párové focení',
-        price: '2 200 Kč',
+        price: 'od 2 200 Kč',
         description: '10 a více upravených fotografií',
         detail: 'Maximální délka 1,5 hodiny',
       },
       {
         title: 'Focení Vašich plechových miláčků',
-        price: '2 500 Kč',
+        price: 'od 2 500 Kč',
         description: '10 a více upravených fotografií',
         detail: 'Maximální délka 1,5 hodiny',
       },
@@ -84,27 +84,27 @@ export const cenikSections: PricingSection[] = [
     cards: [
       {
         title: 'Základní nastavení Sociálních sítí',
-        price: '2 500 Kč',
+        price: 'od 2 500 Kč',
         description:
           'Nastavení stránky FB + IG, doplnění správných informací, přidání 3 prvotních příspěvků',
         detail: 'Balíček může být i ponížen o již nastavené',
       },
       {
         title: 'Nastavení reklamy',
-        price: '750 Kč',
+        price: 'od 750 Kč',
         description:
           'Nastavení cílené reklamy dle Vašich požadavků včetně provedení platby (částka vložena do reklamy není součástí balíčku)',
         detail: 'Investice do správně nastavené reklamy se doopravdy vyplatí',
       },
       {
         title: 'Reels / příspěvek',
-        price: '385 Kč',
+        price: 'od 385 Kč',
         description: 'Grafické zpracování reels/příspěvku včetně SEO optimalizovaného popisu',
         detail: 'Každý příspěvek je potřeba přidávat efektivně, nechte to na nás',
       },
       {
         title: 'Příběh',
-        price: '250 Kč',
+        price: 'od 250 Kč',
         description: 'Grafické zpracování příběhu včetně SEO optimalizovaného popisu',
         detail: 'Příběh je ideální pro ty, kteří Vás již sledují, i na tom záleží',
       },
