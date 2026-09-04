@@ -77,6 +77,7 @@ export const webPortfolio: PortfolioItem[] = [
   {
     title: 'Střelnice Sklep - Domažlice',
     tags: [
+      'Vyvinuto pomocí AI',
       'Vícejazyčný web (CS/EN/DE)',
       'SEO & GEO optimalizace',
       'Optimalizace pro AI vyhledávače',
