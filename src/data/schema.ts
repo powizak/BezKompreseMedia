@@ -2,6 +2,8 @@
 // Mirrors src/data/*.ts content (services, prices) and README contact info.
 // Rendered by BaseLayout.astro via <script type="application/ld+json" set:html={...} />.
 
+import { faqItems } from './faq.ts';
+
 const SITE_URL = 'https://bezkompresemedia.cz';
 
 const ORG_ID = `${SITE_URL}/#organization`;
@@ -295,6 +297,23 @@ export const socialServiceSchema = {
     ),
     offer('Příběh (Story)', 250, 'Grafické zpracování příběhu včetně SEO optimalizovaného popisu.'),
   ]),
+};
+
+// ── FAQ (homepage) ──────────────────────────────────────────────────────
+
+// Must mirror the visible FAQ section (FaqSection.astro) — same Q&A text.
+export const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${SITE_URL}/#faq`,
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
 };
 
 // ── Other pages ─────────────────────────────────────────────────────────
