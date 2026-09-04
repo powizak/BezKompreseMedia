@@ -10,10 +10,26 @@ import {
   webProcessSteps,
   webPortfolio,
 } from '../data/web';
+import { webServiceSchema, breadcrumbSchema } from '../data/schema';
 ---
 
-<BaseLayout title="Web - BezKomprese Media">
-  <ServiceHero title={webHero.title} subtitle={webHero.subtitle} intro={webHero.intro} />
+<BaseLayout
+  title="Tvorba webových stránek | Webdesign, SEO a e-shop | BezKomprese Media"
+  description="Moderní a rychlé webové stránky na míru včetně SEO optimalizace, e-commerce, webhostingu a správy. Reference z celé ČR. Weby od 10 000 Kč."
+  schema={[
+    webServiceSchema,
+    breadcrumbSchema([
+      { name: 'Domů', path: '/' },
+      { name: 'Web', path: '/web/' },
+    ]),
+  ]}
+>
+  <ServiceHero
+    title={webHero.title}
+    subtitle={webHero.subtitle}
+    intro={webHero.intro}
+    srSuffix="— tvorba webových stránek"
+  />
 
   <CategoryGrid
     heading="Kategorie služeb"

@@ -6,14 +6,30 @@ import GalleryGrid from '../components/GalleryGrid.astro';
 import Lightbox from '../components/Lightbox.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { fotoHero, fotoCategories, fotoGalleries, fotoGalleryNote } from '../data/foto';
+import { fotoServiceSchema, breadcrumbSchema } from '../data/schema';
 
 const categoryGridHeading = 'Kategorie služeb';
 const categoryGridIntro =
   'Veškeré naše jednotlivé služby jsou poskytovány na profesionální úrovni a nemusíte se bát jakoukoliv z nich využít. Pokud nenajdete kategorii, kterou hledáte, i tak se neváhejte ozvat.';
 ---
 
-<BaseLayout title="Foto - BezKomprese Media">
-  <ServiceHero title={fotoHero.title} subtitle={fotoHero.subtitle} intro={fotoHero.intro} />
+<BaseLayout
+  title="Fotograf Klatovy | Svatby, portréty, firemní focení | BezKomprese Media"
+  description="Svatební fotografie, portrétní a párové focení, rodinné i firemní fotografie v Klatovech a okolí. Ateliér i focení v terénu. Focení od 2 200 Kč."
+  schema={[
+    fotoServiceSchema,
+    breadcrumbSchema([
+      { name: 'Domů', path: '/' },
+      { name: 'Foto', path: '/foto/' },
+    ]),
+  ]}
+>
+  <ServiceHero
+    title={fotoHero.title}
+    subtitle={fotoHero.subtitle}
+    intro={fotoHero.intro}
+    srSuffix="— fotografické služby"
+  />
 
   <CategoryGrid
     heading={categoryGridHeading}

@@ -4,10 +4,26 @@ import ServiceHero from '../components/ServiceHero.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { socialHero, socialCategories, socialGalleryNote } from '../data/social.ts';
+import { socialServiceSchema, breadcrumbSchema } from '../data/schema';
 ---
 
-<BaseLayout title="Sociální sítě - BezKomprese Media">
-  <ServiceHero title={socialHero.title} subtitle={socialHero.subtitle} intro={socialHero.intro} />
+<BaseLayout
+  title="Správa sociálních sítí | Facebook a Instagram | BezKomprese Media"
+  description="Kompletní správa sociálních sítí: strategie, tvorba obsahu, cílené reklamy a analýzy. Rozšíříme váš dosah na Facebooku i Instagramu. Od 250 Kč."
+  schema={[
+    socialServiceSchema,
+    breadcrumbSchema([
+      { name: 'Domů', path: '/' },
+      { name: 'Sociální sítě', path: '/socialni-site/' },
+    ]),
+  ]}
+>
+  <ServiceHero
+    title={socialHero.title}
+    subtitle={socialHero.subtitle}
+    intro={socialHero.intro}
+    srSuffix="— správa sociálních sítí"
+  />
 
   <CategoryGrid
     heading="Kategorie služeb"

@@ -4,13 +4,29 @@ import ServiceHero from '../components/ServiceHero.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { videoHero, videoCategories, videoGalleries, videoGalleryNote } from '../data/video';
+import { videoServiceSchema, breadcrumbSchema } from '../data/schema';
 
 // Parse gallery note to make "ZDE" a link to /galerie/
 const noteParts = videoGalleryNote.split('ZDE');
 ---
 
-<BaseLayout title="Video - BezKomprese Media">
-  <ServiceHero title={videoHero.title} subtitle={videoHero.subtitle} intro={videoHero.intro} />
+<BaseLayout
+  title="Video produkce | Reklamy, svatební a produktová videa | BezKomprese Media"
+  description="Profesionální video produkce: reklamní spoty, produktová videa, svatební filmy, hudební videoklipy a časosběry. Videa, která prodávají. Od 1 500 Kč/h."
+  schema={[
+    videoServiceSchema,
+    breadcrumbSchema([
+      { name: 'Domů', path: '/' },
+      { name: 'Video', path: '/video/' },
+    ]),
+  ]}
+>
+  <ServiceHero
+    title={videoHero.title}
+    subtitle={videoHero.subtitle}
+    intro={videoHero.intro}
+    srSuffix="— video produkce"
+  />
 
   <CategoryGrid
     heading="Kategorie služeb"
