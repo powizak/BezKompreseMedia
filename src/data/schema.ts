@@ -367,7 +367,7 @@ export const aboutPageSchema = {
       {
         '@type': 'Person',
         name: 'Jakub Prošek',
-        jobTitle: 'Web developer, kameraman, video editor',
+        jobTitle: 'Web developer, AI implementace, automatizace',
         worksFor: { '@id': ORG_ID },
       },
     ],

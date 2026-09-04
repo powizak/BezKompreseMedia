@@ -56,7 +56,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: 'Jakub Prošek',
-    role: 'Web, video, video editor',
+    role: 'Web, AI implementace, automatizace',
     bio: 'Když nemůžeš, tak přidej.',
     photo: '/images/people/jakub.jpg',
     socials: [

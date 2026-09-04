@@ -25,7 +25,7 @@ Podrobnosti: https://bezkompresemedia.cz/cenik/
 
 - Robin Valeš — CEO, fotograf, kameraman, video editor (IČ 08850771)
 - Petr Motyčka — fotograf, kameraman, komunikace (IČ 10698671)
-- Jakub Prošek — web developer, kameraman, video editor (IČ 88204511)
+- Jakub Prošek — web developer, AI implementace a automatizace (IČ 88204511)
 
 ## Další stránky
 
