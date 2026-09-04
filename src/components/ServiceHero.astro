@@ -8,6 +8,8 @@ interface Props {
   intro: string;
   ctaText?: string;
   ctaHref?: string;
+  /** Visually hidden keyword context appended to the H1 (SEO + screen readers), e.g. "— fotografické služby". */
+  srSuffix?: string;
 }
 
 const {
@@ -16,6 +18,7 @@ const {
   intro,
   ctaText = 'Zaslat poptávku',
   ctaHref = '/contact/#form',
+  srSuffix = '',
 } = Astro.props;
 ---
 
@@ -23,7 +26,9 @@ const {
   <div class="service-hero__container">
     <div class="service-hero__content">
       <p class="service-hero__tagline">{subtitle}</p>
-      <h1 class="service-hero__heading">{title}</h1>
+      <h1 class="service-hero__heading">
+        {title}{srSuffix && <span class="sr-only"> {srSuffix}</span>}
+      </h1>
       <p class="service-hero__intro">{intro}</p>
       <a href={ctaHref} class="service-hero__cta">{ctaText}</a>
     </div>
