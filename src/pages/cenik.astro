@@ -3,13 +3,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceHero from '../components/ServiceHero.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { cenikHero, cenikSections } from '../data/cenik';
+import { cenikPageSchema, breadcrumbSchema } from '../data/schema';
 ---
 
 <BaseLayout
-  title="Ceník - BezKomprese Media"
-  description="Ceník jednotlivých služeb, které si u nás můžete objednat. Od fotografií, přes video či webové stránky až po vytváření fyzických produktů právě pro Vás."
+  title="Ceník služeb | Foto, video, web, sociální sítě | BezKomprese Media"
+  description="Přehledný ceník multimediálních služeb: svatby od 9 000 Kč, portréty od 2 200 Kč, weby od 10 000 Kč, správa sociálních sítí od 250 Kč. Množstevní slevy."
+  schema={[
+    cenikPageSchema,
+    breadcrumbSchema([
+      { name: 'Domů', path: '/' },
+      { name: 'Ceník', path: '/cenik/' },
+    ]),
+  ]}
 >
-  <ServiceHero title={cenikHero.title} subtitle={cenikHero.subtitle} intro={cenikHero.intro} />
+  <ServiceHero
+    title={cenikHero.title}
+    subtitle={cenikHero.subtitle}
+    intro={cenikHero.intro}
+    srSuffix="— ceník multimediálních služeb"
+  />
 
   {
     cenikSections.map((section, i) => (

@@ -2,9 +2,20 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { contactIntro, contactAddress, contactOpeningHours } from '../data/contact.ts';
+import { contactPageSchema, breadcrumbSchema } from '../data/schema';
 ---
 
-<BaseLayout title="Kontakt - BezKomprese Media">
+<BaseLayout
+  title="Kontakt | BezKomprese Media Klatovy"
+  description="BezKomprese Media, Tyršova 682/IV, 339 01 Klatovy. Tel.: +420 731 466 375, e-mail: info@bezkompresemedia.cz. Napište nám nezávaznou poptávku."
+  schema={[
+    contactPageSchema,
+    breadcrumbSchema([
+      { name: 'Domů', path: '/' },
+      { name: 'Kontakt', path: '/contact/' },
+    ]),
+  ]}
+>
   <section class="section container">
     <h1>Kontakt</h1>
     <p class="contact-intro scroll-reveal">{contactIntro}</p>
@@ -20,7 +31,8 @@ import { contactIntro, contactAddress, contactOpeningHours } from '../data/conta
           <p>{contactAddress.city}</p>
           <p>
             <a href={`tel:${contactAddress.phone.replace(/\s/g, '')}`}
-              >{contactAddress.phoneLabel}</a>
+              >{contactAddress.phoneLabel}</a
+            >
           </p>
           <p><a href={`mailto:${contactAddress.email}`}>{contactAddress.email}</a></p>
         </address>

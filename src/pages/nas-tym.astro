@@ -4,10 +4,26 @@ import ServiceHero from '../components/ServiceHero.astro';
 import TeamCard from '../components/TeamCard.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { teamHero, teamIntro, teamMembers } from '../data/team';
+import { aboutPageSchema, breadcrumbSchema } from '../data/schema';
 ---
 
-<BaseLayout title="Náš tým - BezKomprese Media">
-  <ServiceHero title={teamHero.title} subtitle={teamHero.subtitle} intro={teamHero.intro} />
+<BaseLayout
+  title="Náš tým | BezKomprese Media"
+  description="Poznejte tým BezKomprese Media — Robin (CEO, foto a video), Petr (foto a video) a Jakub (web a video). Tři profesionálové s mnohaletými zkušenostmi, jeden tým."
+  schema={[
+    aboutPageSchema,
+    breadcrumbSchema([
+      { name: 'Domů', path: '/' },
+      { name: 'Náš tým', path: '/nas-tym/' },
+    ]),
+  ]}
+>
+  <ServiceHero
+    title={teamHero.title}
+    subtitle={teamHero.subtitle}
+    intro={teamHero.intro}
+    srSuffix="— BezKomprese Media"
+  />
 
   <section class="section team-section">
     <div class="container">

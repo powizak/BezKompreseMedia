@@ -5,13 +5,25 @@ import GalleryGrid from '../components/GalleryGrid.astro';
 import Lightbox from '../components/Lightbox.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { galerieHero, galerieItems, galerieNote } from '../data/galerie';
+import { galeriePageSchema, breadcrumbSchema } from '../data/schema';
 ---
 
-<BaseLayout title="Galerie - BezKomprese Media">
+<BaseLayout
+  title="Galerie | Fotografie z akcí | BezKomprese Media"
+  description="Fotogalerie z veřejných akcí — závody, sportovní i kulturní události. Mrkněte, kde jsme všude fotografovali a natáčeli. Další galerie průběžně přibývají."
+  schema={[
+    galeriePageSchema,
+    breadcrumbSchema([
+      { name: 'Domů', path: '/' },
+      { name: 'Galerie', path: '/galerie/' },
+    ]),
+  ]}
+>
   <ServiceHero
     title={galerieHero.title}
     subtitle={galerieHero.subtitle}
     intro={galerieHero.intro}
+    srSuffix="— fotografie z akcí"
   />
 
   <section class="section">
