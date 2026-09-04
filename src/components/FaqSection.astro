@@ -2,7 +2,33 @@
 // FaqSection.astro — FAQ accordion (homepage, before ContactForm)
 // Native <details>/<summary>: keyboard-accessible, no JS needed, content in DOM for SEO.
 // Question/answer text comes from src/data/faq.ts (shared with FAQPage JSON-LD).
-import { faqItems } from '../data/faq.ts';
+// Optional per-item `links` turn a plain-text phrase into an anchor in the rendered
+// version only — the JSON-LD keeps the plain text. A phrase that no longer occurs
+// exactly once in its answer fails the build loudly instead of silently dropping links.
+import { faqItems, type FaqItem } from '../data/faq.ts';
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function answerHtml(item: FaqItem): string {
+  let html = escapeHtml(item.answer);
+  for (const link of item.links ?? []) {
+    const phrase = escapeHtml(link.text);
+    const occurrences = html.split(phrase).length - 1;
+    if (occurrences !== 1) {
+      throw new Error(
+        `FAQ link phrase "${link.text}" occurs ${occurrences}x in answer "${item.question}" — expected exactly 1. Update faq.ts.`,
+      );
+    }
+    html = html.replace(phrase, `<a href="${link.href}" class="faq-item__link">${phrase}</a>`);
+  }
+  return html;
+}
 ---
 
 <section class="faq section" id="faq">
@@ -42,7 +68,7 @@ import { faqItems } from '../data/faq.ts';
                 />
               </svg>
             </summary>
-            <p class="faq-item__answer">{item.answer}</p>
+            <p class="faq-item__answer" set:html={answerHtml(item)} />
           </details>
         ))
       }
@@ -139,5 +165,17 @@ import { faqItems } from '../data/faq.ts';
     line-height: var(--leading-relaxed);
     color: var(--color-text);
     border-top: 1px solid var(--color-border);
+  }
+
+  .faq-item__link {
+    color: var(--color-brand-dark);
+    font-weight: var(--weight-bold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--transition-fast);
+  }
+
+  .faq-item__link:hover {
+    color: var(--color-brand);
   }
 </style>
