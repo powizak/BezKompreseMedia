@@ -34,6 +34,8 @@ bkm-web/
 │   ├── contact-handler.php  # PHP formulářový handler (hCaptcha validace)
 │   ├── .htaccess            # Apache: HTTPS redirect, gzip, caching, security headers
 │   ├── robots.txt           # SEO directives
+│   ├── llms.txt             # Obsah pro AI vyhledávače a LLM (služby, ceník, kontakty)
+│   ├── og-image.png         # OG náhled 1200×630 pro sociální sítě
 │   ├── images/              # Fotogalerie (servírované beze změny, s _600.webp náhledy)
 │   └── favicon*             # Favikony
 ├── src/
