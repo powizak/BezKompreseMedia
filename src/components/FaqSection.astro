@@ -1,0 +1,143 @@
+---
+// FaqSection.astro — FAQ accordion (homepage, before ContactForm)
+// Native <details>/<summary>: keyboard-accessible, no JS needed, content in DOM for SEO.
+// Question/answer text comes from src/data/faq.ts (shared with FAQPage JSON-LD).
+import { faqItems } from '../data/faq.ts';
+---
+
+<section class="faq section" id="faq">
+  <div class="container">
+    <header class="faq-header scroll-reveal">
+      <h2 class="faq-heading">Časté dotazy</h2>
+      <p class="faq-intro">
+        Vše, co potřebujete vědět před spoluprací. Našli jste svou otázku? Pokud ne, napište nám —
+        rádi odpovíme na vše.
+      </p>
+    </header>
+
+    <div class="faq-list">
+      {
+        faqItems.map((item, i) => (
+          <details
+            class="faq-item scroll-reveal"
+            data-delay={i * 60}
+            {...(i === 0 ? { open: true } : {})}
+          >
+            <summary class="faq-item__question">
+              <span>{item.question}</span>
+              <svg
+                class="faq-item__icon"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M5 8l5 5 5-5"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </summary>
+            <p class="faq-item__answer">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-header {
+    max-width: 720px;
+    margin-inline: auto;
+    margin-block-end: var(--space-12);
+    text-align: center;
+  }
+
+  .faq-heading {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    color: var(--color-black);
+    margin-block-end: var(--space-4);
+  }
+
+  .faq-intro {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 860px;
+    margin-inline: auto;
+  }
+
+  .faq-item {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition:
+      box-shadow var(--transition-base),
+      border-color var(--transition-base);
+  }
+
+  .faq-item:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-brand);
+  }
+
+  .faq-item__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--color-black);
+  }
+
+  .faq-item__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__question:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: var(--radius-lg);
+  }
+
+  .faq-item__icon {
+    flex-shrink: 0;
+    color: var(--color-brand-dark);
+    transition: transform var(--transition-base);
+  }
+
+  .faq-item[open] .faq-item__icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-item__answer {
+    padding: var(--space-5) var(--space-6) var(--space-6);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text);
+    border-top: 1px solid var(--color-border);
+  }
+</style>
