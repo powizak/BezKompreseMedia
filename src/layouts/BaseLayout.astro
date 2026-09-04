@@ -6,21 +6,31 @@ import '@fontsource/space-grotesk/700.css';
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { organizationSchema, websiteSchema, homePageSchema } from '../data/schema.ts';
 
 interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** Page-specific JSON-LD schemas (Service, BreadcrumbList, …). Organization/WebSite are added automatically. */
+  schema?: object | object[];
 }
 
 const {
-  title = 'BezKomprese Media - Budujeme Vaši digitální identitu',
-  description = 'BezKomprese Media - Profesionální fotografie, video, tvorba webových stránek, správa sociálních sítí, vše, co posune Vaši firmu kupředu v digitálním světě.',
+  title = 'Multimediální služby | Tvorba webu, fotografie, video | BezKomprese Media',
+  description = 'Profesionální multimediální agentura z Klatov. Tvorba webových stránek, svatební a portrétní fotografie, video produkce a správa sociálních sítí.',
   noindex = false,
+  schema = [],
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const cookieYesId = import.meta.env.PUBLIC_COOKIEYES_ID;
+const isHome = Astro.url.pathname === '/';
+
+// Organization on every page; WebSite + homepage ItemList on the root
+const schemas: object[] = [organizationSchema];
+if (isHome) schemas.push(websiteSchema, homePageSchema);
+schemas.push(...(Array.isArray(schema) ? schema : [schema]));
 
 const allPages = [
   { label: 'Domů', href: '/', footer: false },
@@ -47,6 +57,7 @@ const footerServices = allPages.filter((p) => p.footer);
     <link rel="canonical" href={canonicalURL} />
 
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="theme-color" content="#1a1a18" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -54,6 +65,13 @@ const footerServices = allPages.filter((p) => p.footer);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={new URL('/og-image.png', Astro.site)} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="BezKomprese Media — multimediální služby: web, foto, video, sociální sítě"
+    />
     <meta property="og:locale" content="cs_CZ" />
     <meta property="og:site_name" content="BezKomprese Media" />
 
@@ -62,6 +80,13 @@ const footerServices = allPages.filter((p) => p.footer);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL('/og-image.png', Astro.site)} />
+    <meta
+      name="twitter:image:alt"
+      content="BezKomprese Media — multimediální služby: web, foto, video, sociální sítě"
+    />
+
+    <!-- Structured data (JSON-LD) -->
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
