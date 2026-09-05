@@ -73,6 +73,8 @@ RewriteRule ^(.*)$ /$1/ [L,R=301]
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+  # WebMCP (AI agent tools): allow tool registration in own (top-level) contexts only
+  Header set Permissions-Policy "tools=(self)"
 </IfModule>
 
 # Prevent directory listing
