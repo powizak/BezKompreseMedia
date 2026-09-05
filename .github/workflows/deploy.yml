@@ -12,6 +12,8 @@ on:
 #   FTP_SERVER                - WEDOS FTP host (e.g. ftp.bezkompresemedia.cz)
 #   FTP_USER                  - FTP username
 #   FTP_PASSWORD              - FTP password
+# Optional:
+#   PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN - Chrome Origin Trial token for WebMCP (public, baked into <meta>)
 
 jobs:
   build-and-deploy:
@@ -30,6 +32,7 @@ jobs:
         env:
           PUBLIC_HCAPTCHA_SITE_KEY: ${{ secrets.PUBLIC_HCAPTCHA_SITE_KEY }}
           PUBLIC_COOKIEYES_ID: ${{ secrets.PUBLIC_COOKIEYES_ID }}
+          PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN: ${{ secrets.PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN }}
 
       # Server-side secrets for the PHP form handler. WEDOS shared hosting has
       # no way to set env vars, so they are written to a config file that
