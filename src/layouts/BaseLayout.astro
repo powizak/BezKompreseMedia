@@ -25,6 +25,9 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const cookieYesId = import.meta.env.PUBLIC_COOKIEYES_ID;
+// Chrome Origin Trial token for WebMCP (optional; trial window Chrome 149–156,
+// remove after stable ships). Not a secret — origin-bound, embedded in HTML.
+const webmcpTrialToken = import.meta.env.PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN;
 const isHome = Astro.url.pathname === '/';
 
 // Organization on every page; WebSite + homepage ItemList on the root
@@ -58,6 +61,9 @@ const footerServices = allPages.filter((p) => p.footer);
 
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <meta name="theme-color" content="#1a1a18" />
+
+    {/* Chrome Origin Trial: enables WebMCP (document.modelContext) for real visitors during the trial window */}
+    {webmcpTrialToken && <meta http-equiv="origin-trial" content={webmcpTrialToken} />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
