@@ -109,6 +109,12 @@ V repozitáři: **Settings → Secrets and variables → Actions → New reposit
 | `FTP_USER` | FTP uživatel |
 | `FTP_PASSWORD` | FTP heslo |
 
+Volitelné secrets:
+
+| Secret | Popis |
+|---|---|
+| `PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN` | Chrome Origin Trial token pro WebMCP (veřejný, zapeče se do `<meta http-equiv="origin-trial">`). Zaregistruj na [developer.chrome.com/origintrials](https://developer.chrome.com/origintrials/#/register_trial/4163014905550602241) pro origin `https://bezkompresemedia.cz`; po nasazení stable verze Chrome 157 lze token odebrat |
+
 FTP účet vede přímo do document rootu, proto workflow nahrává do `./` (`server-dir` v `deploy.yml`). Pozor: dřívější hodnota `www/` vytvořila na serveru vnořenou složku `/www/` — pokud změníte hosting, ověřte, kam FTP účet skutečně směřuje.
 
 Poznámka: WEDOS nepodporuje SSH/rsync ani nastavení proměnných prostředí, proto FTP + generovaný `config.php`.

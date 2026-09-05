@@ -22,7 +22,7 @@ No tests or linter. Node ≥ 22.12.0 required. Platform note: `@rollup/rollup-wi
 
 GitHub Actions (`.github/workflows/deploy.yml`) builds and FTP-deploys `dist/` to WEDOS hosting (`www/` doc root) on every push to `master`. The server is Apache + PHP only — no Node runtime; the contact form backend is PHP (`public/contact-handler.php`).
 
-Nothing is hardcoded: `PUBLIC_*` values come from `.env` locally and from GitHub secrets in CI (baked in at build time). The server-side hCaptcha secret is written by CI into `dist/config.php` (WEDOS cannot set env vars); `.htaccess` denies direct access to it. Required GitHub secrets: `PUBLIC_HCAPTCHA_SITE_KEY`, `PUBLIC_COOKIEYES_ID`, `HCAPTCHA_SECRET_KEY`, `FTP_SERVER`, `FTP_USER`, `FTP_PASSWORD`.
+Nothing is hardcoded: `PUBLIC_*` values come from `.env` locally and from GitHub secrets in CI (baked in at build time). The server-side hCaptcha secret is written by CI into `dist/config.php` (WEDOS cannot set env vars); `.htaccess` denies direct access to it. Required GitHub secrets: `PUBLIC_HCAPTCHA_SITE_KEY`, `PUBLIC_COOKIEYES_ID`, `HCAPTCHA_SECRET_KEY`, `FTP_SERVER`, `FTP_USER`, `FTP_PASSWORD`. Optional: `PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN` (public Chrome Origin Trial token, rendered as an origin-trial `<meta>` in BaseLayout while the WebMCP trial window is active — remove after Chrome 157 ships stable).
 
 ## Architecture
 
