@@ -9,8 +9,9 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     sitemap({
-      // /dekujeme/ is a noindex thank-you page — keep it out of the sitemap
-      filter: (page) => !page.includes('/dekujeme/'),
+      // /dekujeme/ is a noindex thank-you page; /mcp-data.json is a data endpoint
+      // for the PHP MCP server — keep both out of the sitemap
+      filter: (page) => !page.includes('/dekujeme/') && !page.includes('/mcp-data.json'),
     }),
   ],
 });
