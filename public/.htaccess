@@ -14,6 +14,9 @@ RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://bezkompresemedia.cz%{REQUEST_URI} [L,R=301]
 
+# MCP server: clean URL /mcp (and /mcp/) -> mcp.php (Streamable HTTP, JSON-RPC)
+RewriteRule ^mcp/?$ mcp.php [L]
+
 # Force trailing slash (match Astro trailingSlash: 'always')
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

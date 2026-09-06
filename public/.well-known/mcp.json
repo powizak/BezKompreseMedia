@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "bezkomprese-media": {
+      "url": "https://bezkompresemedia.cz/mcp",
+      "type": "streamable-http",
+      "description": "BezKomprese Media — multimediální agentura z Klatov (tvorba webu, fotografie, video produkce, správa sociálních sítí). Nástroje: přehled služeb, ceník, kontakty, FAQ a odeslání poptávky.",
+      "serverInfo": {
+        "name": "bezkomprese-media",
+        "version": "1.0.0"
+      }
+    }
+  }
+}

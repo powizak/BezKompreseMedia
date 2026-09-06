@@ -58,11 +58,17 @@ const footerServices = allPages.filter((p) => p.footer);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {
+      /* Server-side MCP endpoint (Streamable HTTP) — see public/mcp.php and /.well-known/mcp.json */
+    }
+    <link rel="mcp" href="/mcp" />
 
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <meta name="theme-color" content="#1a1a18" />
 
-    {/* Chrome Origin Trial: enables WebMCP (document.modelContext) for real visitors during the trial window */}
+    {
+      /* Chrome Origin Trial: enables WebMCP (document.modelContext) for real visitors during the trial window */
+    }
     {webmcpTrialToken && <meta http-equiv="origin-trial" content={webmcpTrialToken} />}
 
     <!-- Open Graph -->
