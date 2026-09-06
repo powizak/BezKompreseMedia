@@ -43,6 +43,13 @@ Podrobnosti: https://bezkompresemedia.cz/cenik/
 - **Můžu objednat více služeb najednou?** Ano, kombinace (foto + video na svatbě, web + focení + sociální sítě) se slevou.
 - **Jak probíhá objednávka?** Nezávazná poptávka formulářem / tel. +420 731 466 375 / info@bezkompresemedia.cz → schůzka → nabídka na míru.
 
+## MCP server (pro AI agenty)
+
+- Endpoint (Model Context Protocol, Streamable HTTP, JSON-RPC 2.0): https://bezkompresemedia.cz/mcp
+- Discovery manifest: https://bezkompresemedia.cz/.well-known/mcp.json
+- Nástroje: get_services (přehled služeb), get_pricing (ceník), get_contact_info (kontakty), get_faq (časté dotazy), submit_inquiry (odeslání strukturované poptávky — dorazí jako e-mail)
+- Web disponuje také klientskými WebMCP nástroji přímo na stránkách (Chrome 149+, origin trial)
+
 ## Profily
 
 - Facebook: https://www.facebook.com/bezkomprese

@@ -32,10 +32,12 @@ Statický web pro [bezkompresemedia.cz](https://bezkompresemedia.cz) postavený 
 bkm-web/
 ├── public/                  # Statické soubory (kopírují se do dist/ beze změny)
 │   ├── contact-handler.php  # PHP formulářový handler (hCaptcha validace)
-│   ├── .htaccess            # Apache: HTTPS redirect, gzip, caching, security headers
+│   ├── mcp.php              # MCP server (Model Context Protocol, Streamable HTTP) — /mcp
+│   ├── .htaccess            # Apache: HTTPS redirect, gzip, caching, security headers, /mcp rewrite
 │   ├── robots.txt           # SEO directives
 │   ├── llms.txt             # Obsah pro AI vyhledávače a LLM (služby, ceník, kontakty)
 │   ├── og-image.png         # OG náhled 1200×630 pro sociální sítě
+│   ├── .well-known/mcp.json # Discovery manifest MCP serveru
 │   ├── images/              # Fotogalerie (servírované beze změny, s _600.webp náhledy)
 │   └── favicon*             # Favikony
 ├── src/
